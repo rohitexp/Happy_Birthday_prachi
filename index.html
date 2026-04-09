@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Magical Surprise ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root { --pink: #ff4d6d; --bg: #0f0f0f; --accent: #880e4f; --gold: #ffd700; --light-pink: #fff0f3; }
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Poppins', sans-serif; background: var(--bg); color: white; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+
+        /* --- TIMER SCREEN --- */
+        #timer-screen {
+            display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; background: radial-gradient(circle, #2b0a1a 0%, #000 100%);
+            transform: scale(0.8); transform-origin: center;
+        }
+        .timer-title { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--pink); margin-bottom: 20px; white-space: nowrap; }
+        .clock-container { display: flex; gap: 15px; text-align: center; }
+        .clock-box { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; border: 1px solid var(--pink); min-width: 80px; }
+        .clock-box span { display: block; font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--pink); }
+        .clock-box label { font-size: 0.8rem; text-transform: uppercase; opacity: 0.7; }
+
+        /* --- MAGICAL REVEAL SCREEN --- */
+        #reveal-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            justify-content: center; align-items: center; background: var(--bg); z-index: 500;
+            overflow: hidden;
+        }
+        .instruction { color: white; font-size: 1.2rem; opacity: 0.8; margin-bottom: 20px; z-index: 10; text-align: center; }
+
+        /* Ribbon & Pearl Mala */
+        .ribbon-rope {
+            position: absolute; top: 50%; left: 0; width: 100%; height: 8px;
+            background: linear-gradient(to right, #880e4f, #d81b60, #880e4f);
+            border-radius: 4px; transform: translateY(-50%); box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: 0.8s ease-in-out; cursor: pointer;
+        }
+        .mala {
+            position: absolute; top: calc(50% + 20px); left: 0; width: 100%; height: 15px;
+            display: flex; justify-content: center; gap: 8px; transform: translateY(-50%);
+            transition: 0.8s ease-in-out;
+        }
+        .pearl { width: 15px; height: 15px; background: radial-gradient(circle, white, #e0e0e0); border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .tap-hint { position: absolute; top: calc(50% + 50px); left: 50%; transform: translateX(-50%); color: var(--gold); font-size: 1rem; animation: pulse 1.5s infinite; text-align: center; }
+
+        /* --- FINAL REVEAL PAGE --- */
+        #final-page { 
+            display: none; background: #fff0f3; color: #444; height: 100vh; width: 100vw; 
+            overflow-y: auto; text-align: center; padding: 20px; position: absolute; top:0; left:0; 
+            box-sizing: border-box; 
+        }
+        
+        /* Floating Memories Container */
+        .floating-memories {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; opacity: 0.2; /* Soft background effect */
+        }
+        .float-photo {
+            position: absolute; width: 100px; height: 100px; 
+            border: 5px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            animation: floatUp 15s linear infinite; opacity: 0;
+        }
+        .float-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 { font-family: 'Great Vibes', cursive; font-size: 4.5rem; color: var(--pink); margin: 20px 0; opacity: 0; transform: translateY(20px); transition: 0.8s ease 0.5s; z-index: 10; position: relative; }
+        
+        .photo-frame { 
+            width: 90%; max-width: 350px; border: 10px solid white; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 20px auto; 
+            transform: scale(0.9); transition: 0.5s ease; opacity: 0; 
+            z-index: 10; position: relative;
+        }
+        .photo-frame img { width: 100%; display: block; }
+        
+        .msg { font-size: 1.2rem; max-width: 500px; margin: 0 auto; margin-top: 20px; color: #555; opacity: 0; transform: translateY(20px); transition: 0.8s ease 0.8s; z-index: 10; position: relative; }
+        .promise { font-style: italic; color: #777; font-size: 1.1rem; margin-top: 30px; opacity: 0; transform: translateY(20px); transition: 0.8s ease 1s; z-index: 10; position: relative; }
+
+        /* Animation Classes */
+        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        .reveal-final h1, .reveal-final .msg, .reveal-final .photo-frame, .reveal-final .promise { opacity: 1; transform: scale(1) translateY(0); }
+        .heart { position: fixed; top: -10%; animation: fall linear infinite; z-index: 100; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) translateX(0) rotate(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(20px) rotate(360deg); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop><source src="birthday_song.mp3" type="audio/mpeg"></audio>
+    <audio id="voiceMsg"><source src="voice_message.mp3" type="audio/mpeg"></audio>
+
+    <div id="timer-screen">
+        <div class="timer-title">Prachi's Birthday Surprise Unlocks In...</div>
+        <div class="clock-container">
+            <div class="clock-box"><span id="days">00</span><label>Days</label></div>
+            <div class="clock-box"><span id="hours">00</span><label>Hours</label></div>
+            <div class="clock-box"><span id="mins">00</span><label>Mins</label></div>
+            <div class="clock-box"><span id="secs">00</span><label>Secs</label></div>
+        </div>
+    </div>
+
+    <div id="reveal-screen" onclick="performReveal()">
+        <p class="instruction">Tap the Ribbon to Open the Gift</p>
+        <div class="ribbon-rope" id="rope"></div>
+        <div class="mala" id="mala">
+            <script>for(let i=0; i<30; i++) document.write('<div class="pearl"></div>');</script>
+        </div>
+        <div class="tap-hint">Tap Anywhere ✨</div>
+    </div>
+
+    <div id="final-page">
+        <div class="floating-memories">
+            <div class="float-photo" style="left: 10%; animation-delay: 2s;"><img src="photo1.jpg"></div>
+            <div class="float-photo" style="right: 15%; animation-delay: 6s; animation-duration: 20s;"><img src="photo2.jpg"></div>
+            <div class="float-photo" style="left: 20%; top: 30%; animation-delay: 10s; animation-duration: 18s;"><img src="photo3.jpg"></div>
+            <div class="float-photo" style="right: 25%; top: 40%; animation-delay: 14s; animation-duration: 22s;"><img src="photo4.jpg"></div>
+        </div>
+        
+        <h1>Happy Birthday Prachi!</h1>
+        
+        <div class="photo-frame"><img src="photo1.jpg"></div>
+        
+        <p class="msg">Wishing you a year full of happiness, smiles, and countless blessings. Can't wait for our new journey to begin! ❤️💍</p>
+        
+        <div class="photo-frame" style="margin-top: 30px;"><img src="photo2.jpg"></div>
+        
+        <p class="promise">"A birthday promise... to always be by your side, listen to you, and make you proud of our decision. A very happy birthday Prachi."</p>
+        
+        <p style="margin-top: 50px; margin-bottom: 50px; position: relative; z-index: 10;">- Yours Truly</p>
+    </div>
+
+    <script>
+        // ISSE FALSE KARNE PAR TIMER DIKHEGA
+        const debugMode = true; 
+
+        function updateTimer() {
+            const target = new Date('April 25, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            if (diff <= 0 || debugMode) {
+                document.getElementById('timer-screen').style.display = 'none';
+                document.getElementById('reveal-screen').style.display = 'flex';
+            } else {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+                setTimeout(updateTimer, 1000);
+            }
+        }
+        updateTimer();
+
+        // Reveal Celebration Logic
+        let alreadyRevealed = false;
+        function performReveal() {
+            if (alreadyRevealed) return;
+            alreadyRevealed = true;
+
+            const rope = document.getElementById('rope');
+            const mala = document.getElementById('mala');
+
+            // 1. Break the Ribbon Animation
+            rope.style.transform = 'translateY(-50%) scaleX(0)'; // Makes ribbon disappear from center
+            rope.style.opacity = '0';
+
+            // 2. Mala Pearl Fall Animation
+            const pearls = mala.querySelectorAll('.pearl');
+            pearls.forEach((pearl, index) => {
+                setTimeout(() => {
+                    pearl.style.transition = `transform ${0.5 + Math.random()}s ease-in, opacity 0.5s ease-out`;
+                    pearl.style.transform = `translateY(${window.innerHeight}px) translateX(${Math.random() * 200 - 100}px)`; // Pearl falls down with random left/right movement
+                    pearl.style.opacity = '0';
+                }, index * 20); // Adds a slight delay to each pearl fall
+            });
+
+            // 3. Play Music & Voice Message & Start Heart Rain
+            setTimeout(() => {
+                const music = document.getElementById('bgMusic');
+                const voice = document.getElementById('voiceMsg');
+                
+                // Play Background Music softer, and Voice message clear
+                music.volume = 0.3; // Low background volume
+                music.play().catch(() => console.log("Music play blocked"));
+                
+                voice.play().catch(() => console.log("Voice play blocked"));
+
+                // Show final page
+                const finalPage = document.getElementById('final-page');
+                const revealScreen = document.getElementById('reveal-screen');
+                revealScreen.style.opacity = '0'; // Soft fade out
+                setTimeout(() => revealScreen.style.display = 'none', 500);
+                
+                finalPage.style.display = 'block';
+                setTimeout(() => finalPage.classList.add('reveal-final'), 100); // Trigger fade-in animations
+
+                startHeartRain();
+            }, 1000); // 1 second after ribbon cut
+        }
+
+        function startHeartRain() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = ['❤️','💖','💗','💓'][Math.floor(Math.random()*4)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; // Falling speed
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 200);
+        }
+    </script>
+</body>
+</html>
