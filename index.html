@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>✨ Prachi's Rotating Birthday Magic ✨</title>
+    <title>✨ Prachi's Magical Birthday | Rotating Photos ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
@@ -29,7 +29,6 @@
             color: white;
         }
 
-        /* 3D Canvas Background */
         #canvas-container {
             position: fixed;
             top: 0;
@@ -37,10 +36,8 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            display: block;
         }
 
-        /* UI Overlay */
         .ui-overlay {
             position: relative;
             z-index: 10;
@@ -64,34 +61,20 @@
             border-radius: 2rem;
             padding: 2rem 1.5rem;
             box-shadow: 0 25px 45px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.3);
             max-height: 85vh;
             overflow-y: auto;
             scrollbar-width: thin;
         }
 
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #3a1f2c;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ff4d6d;
-            border-radius: 10px;
-        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #3a1f2c; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #ff4d6d; border-radius: 10px; }
 
         .page {
             display: none;
             animation: fadeSlide 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
-
-        .page.active-page {
-            display: block;
-        }
-
+        .page.active-page { display: block; }
         @keyframes fadeSlide {
             from { opacity: 0; transform: translateY(25px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -102,7 +85,6 @@
             text-align: center;
             margin-bottom: 1rem;
         }
-
         h1 { font-size: 3rem; color: #ffb7c5; text-shadow: 0 0 10px #ff4d6d; }
         h2 { font-size: 2rem; color: #ffd966; }
 
@@ -110,13 +92,12 @@
             color: #ff4d6d;
             animation: pulseGlow 1.5s infinite;
         }
-
         @keyframes pulseGlow {
             0% { text-shadow: 0 0 2px #ff4d6d; opacity: 0.7; }
             100% { text-shadow: 0 0 20px #ff4d6d, 0 0 5px gold; opacity: 1; }
         }
 
-        /* ROTATING PHOTO FRAME - "gumega" effect */
+        /* ========== UNIQUE PHOTO ANIMATIONS ========== */
         .photo-frame {
             background: white;
             padding: 12px;
@@ -124,31 +105,9 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.3);
             margin: 1.5rem auto;
             width: 90%;
-            transform-style: preserve-3d;
-            transition: transform 0.4s ease;
-            animation: gentleSpin 12s infinite linear;
+            transition: all 0.2s ease;
             cursor: pointer;
         }
-        
-        /* Continuous 3D rotation */
-        @keyframes gentleSpin {
-            0% { transform: rotateY(0deg) rotateX(0deg); }
-            25% { transform: rotateY(5deg) rotateX(2deg); }
-            50% { transform: rotateY(0deg) rotateX(0deg); }
-            75% { transform: rotateY(-5deg) rotateX(-2deg); }
-            100% { transform: rotateY(0deg) rotateX(0deg); }
-        }
-        
-        /* Hover makes it spin faster for fun */
-        .photo-frame:hover {
-            animation: fastSpin 0.8s infinite linear;
-        }
-        
-        @keyframes fastSpin {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-        
         .photo-frame img {
             width: 100%;
             border-radius: 12px;
@@ -157,6 +116,74 @@
             object-fit: cover;
             background: #ffe0e7;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Animation 1: Floating & gentle rotation (page 2) */
+        .anim-float {
+            animation: floatRotate 6s infinite ease-in-out;
+        }
+        @keyframes floatRotate {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Animation 2: 3D Tilt & Pulse (page 3) */
+        .anim-tilt {
+            animation: tiltPulse 5s infinite alternate;
+        }
+        @keyframes tiltPulse {
+            0% { transform: perspective(800px) rotateX(0deg) rotateY(0deg) scale(1); }
+            100% { transform: perspective(800px) rotateX(4deg) rotateY(6deg) scale(1.02); }
+        }
+
+        /* Animation 3: Slow 3D Spin (page 6 - left photo) */
+        .anim-spin-left {
+            animation: spin3D 8s infinite linear;
+        }
+        /* Animation 4: Reverse Spin (page 6 - right photo) */
+        .anim-spin-right {
+            animation: spin3DReverse 8s infinite linear;
+        }
+        @keyframes spin3D {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        @keyframes spin3DReverse {
+            from { transform: rotateY(360deg); }
+            to { transform: rotateY(0deg); }
+        }
+
+        /* Animation 5: Wobble + Glow (page 9) */
+        .anim-wobble {
+            animation: wobbleGlow 2s infinite ease;
+        }
+        @keyframes wobbleGlow {
+            0%, 100% { transform: translateX(0%) rotate(0deg); box-shadow: 0 0 0px gold; }
+            15% { transform: translateX(-8px) rotate(-2deg); }
+            30% { transform: translateX(6px) rotate(2deg); }
+            45% { transform: translateX(-4px) rotate(-1deg); }
+            60% { transform: translateX(3px) rotate(1deg); }
+            75% { transform: translateX(-2px) rotate(-0.5deg); }
+            100% { transform: translateX(0) rotate(0); box-shadow: 0 0 20px rgba(255,215,0,0.8); }
+        }
+
+        /* Gallery grid special */
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+        .gallery-grid .photo-frame {
+            width: 45%;
+            margin: 0;
+        }
+        @media (max-width: 550px) {
+            .gallery-grid .photo-frame { width: 100%; }
+            h1 { font-size: 2.5rem; }
+            .pages-container { padding: 1.2rem; }
         }
 
         .message-card {
@@ -168,7 +195,6 @@
             line-height: 1.5;
             border-left: 5px solid #ff4d6d;
         }
-
         .poem {
             font-style: italic;
             text-align: center;
@@ -177,7 +203,6 @@
             padding: 1.2rem;
             border-radius: 2rem;
         }
-
         .promise-list {
             list-style: none;
             text-align: left;
@@ -188,13 +213,8 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 0.95rem;
         }
-        .promise-list li i {
-            width: 30px;
-            color: #ffb347;
-        }
-
+        .promise-list li i { width: 30px; color: #ffb347; }
         .nav-buttons {
             display: flex;
             justify-content: space-between;
@@ -241,7 +261,6 @@
             border-radius: 10px;
             box-shadow: 0 0 8px #ff4d6d;
         }
-
         .countdown-box {
             text-align: center;
             font-size: 1.8rem;
@@ -252,7 +271,6 @@
             letter-spacing: 2px;
             margin: 20px 0;
         }
-
         .floating-heart {
             position: absolute;
             pointer-events: none;
@@ -263,26 +281,6 @@
         @keyframes floatUp {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
-        }
-        
-        /* Gallery grid for rotating photos */
-        .gallery-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin: 25px 0;
-        }
-        .gallery-grid .photo-frame {
-            width: 45%;
-            margin: 0;
-            animation: gentleSpin 10s infinite alternate;
-        }
-        
-        @media (max-width: 550px) {
-            .pages-container { padding: 1.2rem; margin: 0 10px; }
-            h1 { font-size: 2.5rem; }
-            .gallery-grid .photo-frame { width: 100%; }
         }
     </style>
 </head>
@@ -298,42 +296,36 @@
             <div style="text-align:center; margin:10px 0;">
                 <i class="fas fa-heart heart-glow" style="font-size: 3rem;"></i>
             </div>
-            <div class="countdown-box" id="countdownDisplay">
-                Calculating...
-            </div>
+            <div class="countdown-box" id="countdownDisplay">Calculating...</div>
             <div class="message-card">
-                🌸 A special journey awaits you, Prachi. Each page is a gift from the heart. Let's begin!<br>
-                <small>✨ Photos will rotate magically on screen ✨</small>
+                🌸 A special journey awaits you, Prachi. Each page is a gift from the heart.<br>
+                <strong>✨ Photos will float, spin & dance ✨</strong>
             </div>
             <div class="nav-buttons">
                 <button id="next1" style="margin:auto;">Start Journey <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
 
-        <!-- PAGE 2: Memory 1 (photo1.jpg) -->
+        <!-- PAGE 2: Memory 1 (photo1) - Floating Animation -->
         <div class="page" id="page2">
             <h2>❤️ First Glimpse</h2>
-            <div class="photo-frame">
+            <div class="photo-frame anim-float">
                 <img src="photo1.jpg" alt="Prachi & Love" onerror="this.src='https://placehold.co/600x750/ffb7c5/4a2a3a?text=Photo+1+%E2%9D%A4%EF%B8%8F'">
             </div>
-            <div class="message-card">
-                "The moment I saw you, the stars aligned. Every smile of yours is poetry."
-            </div>
+            <div class="message-card">"The moment I saw you, the stars aligned. Your smile floats in my heart forever."</div>
             <div class="nav-buttons">
                 <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
                 <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
 
-        <!-- PAGE 3: Memory 2 (photo2.jpg) -->
+        <!-- PAGE 3: Memory 2 (photo2) - Tilt & Pulse -->
         <div class="page" id="page3">
             <h2>🌸 Laughter & Sunshine</h2>
-            <div class="photo-frame">
+            <div class="photo-frame anim-tilt">
                 <img src="photo2.jpg" alt="Happy Moments" onerror="this.src='https://placehold.co/600x750/ffd966/4a2a3a?text=Photo+2+%F0%9F%92%96'">
             </div>
-            <div class="message-card">
-                "Your laughter is my favorite melody. May it echo forever in our journey."
-            </div>
+            <div class="message-card">"Your laughter tilts my world in the most beautiful way. Every heartbeat pulses for you."</div>
             <div class="nav-buttons">
                 <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
                 <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
@@ -364,8 +356,7 @@
             <h2>🎵 Melody of Hearts</h2>
             <div class="message-card" style="text-align:center;">
                 <i class="fas fa-music" style="font-size: 2rem; color:#ffb347;"></i>
-                <p style="margin-top:12px;">"Tum hi ho" – every beat whispers your name.<br>
-                Our love song plays on repeat in my soul.</p>
+                <p style="margin-top:12px;">"Tum hi ho" – every beat whispers your name.<br> Our love song plays on repeat in my soul.</p>
                 <hr style="margin:15px 0; border-color:#ff4d6d;">
                 <p>🎤 "You are the reason I believe in forever..." 🎤</p>
             </div>
@@ -375,18 +366,18 @@
             </div>
         </div>
 
-        <!-- PAGE 6: Rotating Gallery with both photos (gumega effect) -->
+        <!-- PAGE 6: Rotating Gallery - Two photos with 3D spin (opposite directions) -->
         <div class="page" id="page6">
-            <h2>📸 Rotating Gallery</h2>
+            <h2>📸 3D Spinning Gallery</h2>
             <div class="gallery-grid">
-                <div class="photo-frame">
+                <div class="photo-frame anim-spin-left">
                     <img src="photo1.jpg" alt="Memory 1" onerror="this.src='https://placehold.co/400x500/ffa5b0/white?text=Photo+1'">
                 </div>
-                <div class="photo-frame">
+                <div class="photo-frame anim-spin-right">
                     <img src="photo2.jpg" alt="Memory 2" onerror="this.src='https://placehold.co/400x500/f9c7c2/white?text=Photo+2'">
                 </div>
             </div>
-            <div class="message-card">✨ Both photos spinning with love — just like our endless moments ✨</div>
+            <div class="message-card">✨ Both photos spinning in 3D — one clockwise, one counter-clockwise. Just like our intertwined souls ✨</div>
             <div class="nav-buttons">
                 <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
                 <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
@@ -409,14 +400,14 @@
             </div>
         </div>
 
-        <!-- PAGE 8: Aashirwad & Ring Ceremony -->
+        <!-- PAGE 8: Aashirwad Ceremony -->
         <div class="page" id="page8">
             <h2>💍 Aashirwad Ceremony</h2>
             <div style="text-align:center; font-size: 1.2rem; background:rgba(255,215,0,0.2); padding: 20px; border-radius: 30px;">
                 <i class="fas fa-ring" style="font-size: 3rem; color: #ffd966;"></i>
                 <p><strong>16 April 2026</strong> — The day our families unite, blessings shower, and our souls interlace forever.</p>
                 <p>✨ This sacred bond of Aashirwad marks the beginning of a magical lifetime ✨</p>
-                <div style="margin-top: 15px;"><i class="fas fa-hands-helping"></i> With love, respect and infinite dreams.</div>
+                <div><i class="fas fa-hands-helping"></i> With love, respect and infinite dreams.</div>
             </div>
             <div class="nav-buttons">
                 <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
@@ -424,10 +415,10 @@
             </div>
         </div>
 
-        <!-- PAGE 9: Grand Celebration / Birthday Finale with rotating photo -->
+        <!-- PAGE 9: Grand Celebration - Wobble + Glow Photo -->
         <div class="page" id="page9">
             <h1>🎂 Happy Birthday Prachi! 🎉</h1>
-            <div class="photo-frame" style="background: linear-gradient(145deg, gold, #ffb7c5);">
+            <div class="photo-frame anim-wobble" style="background: linear-gradient(145deg, gold, #ffb7c5);">
                 <img src="photo1.jpg" alt="Our Beautiful Memory" onerror="this.src='https://placehold.co/600x500/ffdfbf/5a2a3a?text=You+are+my+Eternity'">
             </div>
             <div id="typewriter-effect" style="font-size: 1rem; background: rgba(0,0,0,0.6); border-radius: 1.5rem; padding: 12px; margin: 10px 0;"></div>
@@ -445,7 +436,7 @@
 <script type="module">
     import * as THREE from 'three';
 
-    // 3D Background Setup
+    // --- 3D Background Setup ---
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x050510);
@@ -453,14 +444,12 @@
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 2, 12);
-    camera.lookAt(0, 0, 0);
-
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
 
-    // Stars Background
+    // Stars
     const starGeometry = new THREE.BufferGeometry();
     const starCount = 1800;
     const starPositions = new Float32Array(starCount * 3);
@@ -470,61 +459,52 @@
         starPositions[i*3+2] = (Math.random() - 0.5) * 100 - 50;
     }
     starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.3, transparent: true, opacity: 0.7 });
-    const stars = new THREE.Points(starGeometry, starMaterial);
+    const stars = new THREE.Points(starGeometry, new THREE.PointsMaterial({ color: 0xffffff, size: 0.3, transparent: true, opacity: 0.7 }));
     scene.add(stars);
 
-    // 3D Heart Particle System (floating in background)
+    // Heart particle system
     const heartGroup = new THREE.Group();
     const particleCount = 2000;
-    const heartGeometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
+    const heartPositions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
         const t = Math.random() * Math.PI * 2;
         const xRaw = 16 * Math.pow(Math.sin(t), 3);
         const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
         const scale = 0.12;
-        const x = xRaw * scale + (Math.random() - 0.5) * 0.3;
-        const y = yRaw * scale + (Math.random() - 0.5) * 0.3;
-        const z = (Math.random() - 0.5) * 1.5;
-        positions[i*3] = x;
-        positions[i*3+1] = y;
-        positions[i*3+2] = z;
+        heartPositions[i*3] = xRaw * scale + (Math.random() - 0.5) * 0.3;
+        heartPositions[i*3+1] = yRaw * scale + (Math.random() - 0.5) * 0.3;
+        heartPositions[i*3+2] = (Math.random() - 0.5) * 1.5;
     }
-    heartGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const heartMaterial = new THREE.PointsMaterial({ color: 0xff4d6d, size: 0.07, transparent: true, blending: THREE.AdditiveBlending });
-    const heartPoints = new THREE.Points(heartGeometry, heartMaterial);
+    const heartGeo = new THREE.BufferGeometry();
+    heartGeo.setAttribute('position', new THREE.BufferAttribute(heartPositions, 3));
+    const heartMat = new THREE.PointsMaterial({ color: 0xff4d6d, size: 0.07, transparent: true, blending: THREE.AdditiveBlending });
+    const heartPoints = new THREE.Points(heartGeo, heartMat);
     heartGroup.add(heartPoints);
     
-    // Glow particles
-    const glowGeo = new THREE.BufferGeometry();
-    const glowPos = [];
+    const glowPositions = [];
     for (let i=0;i<1000;i++) {
-        glowPos.push((Math.random() - 0.5)*4.5);
-        glowPos.push((Math.random() - 0.5)*3.5);
-        glowPos.push((Math.random() - 0.5)*3);
+        glowPositions.push((Math.random() - 0.5)*4.5);
+        glowPositions.push((Math.random() - 0.5)*3.5);
+        glowPositions.push((Math.random() - 0.5)*3);
     }
-    glowGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(glowPos), 3));
+    const glowGeo = new THREE.BufferGeometry();
+    glowGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(glowPositions), 3));
     const glowMat = new THREE.PointsMaterial({ color: 0xff88aa, size: 0.05, transparent: true, opacity: 0.5 });
     const glowPoints = new THREE.Points(glowGeo, glowMat);
     heartGroup.add(glowPoints);
     scene.add(heartGroup);
     
-    // Rotating Ring
     const ringGeo = new THREE.TorusGeometry(1.5, 0.06, 64, 300);
     const ringMat = new THREE.MeshStandardMaterial({ color: 0xffaabb, emissive: 0x441122, metalness: 0.7 });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     scene.add(ring);
     
-    // Lights
     const ambientLight = new THREE.AmbientLight(0x332233);
     scene.add(ambientLight);
     const pointLight = new THREE.PointLight(0xff6699, 1, 20);
     pointLight.position.set(2, 3, 4);
     scene.add(pointLight);
-    const backLight = new THREE.PointLight(0xffaa88, 0.5);
-    backLight.position.set(-2, 1, -4);
-    scene.add(backLight);
+    scene.add(new THREE.PointLight(0xffaa88, 0.5).position.set(-2, 1, -4));
     
     let time = 0;
     function animate3D() {
@@ -532,23 +512,19 @@
         time += 0.008;
         heartGroup.rotation.y = Math.sin(time * 0.3) * 0.5;
         heartGroup.rotation.x = Math.sin(time * 0.2) * 0.2;
-        heartGroup.rotation.z = Math.sin(time * 0.4) * 0.1;
         ring.rotation.x = time * 0.5;
         ring.rotation.z = time * 0.3;
         stars.rotation.y += 0.0005;
-        stars.rotation.x += 0.0003;
         camera.lookAt(0, 0, 0);
         renderer.render(scene, camera);
     }
     animate3D();
     
-    function setHeartColor(pageIndex) {
+    function setHeartColor(pageIdx) {
         const colors = [0xff4d6d, 0xff80a5, 0xffb347, 0xff69b4, 0xdd88ff, 0xff6f91, 0xffaa77, 0xff99cc, 0xff5e7d];
-        const hueColor = colors[pageIndex % colors.length];
-        heartMaterial.color.setHex(hueColor);
-        glowMat.color.setHex(hueColor);
-        ringMat.color.setHex(hueColor);
-        ringMat.emissive.setHex(hueColor - 0x221111);
+        heartMat.color.setHex(colors[pageIdx % colors.length]);
+        glowMat.color.setHex(colors[pageIdx % colors.length]);
+        ringMat.color.setHex(colors[pageIdx % colors.length]);
     }
     
     window.addEventListener('resize', () => {
@@ -557,70 +533,47 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
     
-    // ------------------- PAGE LOGIC (9 Pages) -------------------
+    // ---------- Page Navigation (9 pages) ----------
     const pages = ['page1','page2','page3','page4','page5','page6','page7','page8','page9'].map(id => document.getElementById(id));
     let currentPage = 0;
-    const totalPages = 9;
     
     function showPage(index) {
-        pages.forEach((p, i) => {
-            if (p) p.classList.toggle('active-page', i === index);
-        });
+        pages.forEach((p, i) => p.classList.toggle('active-page', i === index));
         updateDots(index);
         setHeartColor(index);
-        if (index === 8) { 
-            startTypewriter();
-            triggerConfetti();
-        }
+        if (index === 8) { startTypewriter(); triggerConfetti(); }
         if (index === 0) updateCountdownDisplay();
+        // Additional fun: when entering gallery page, ensure spin animations restart (CSS handles)
     }
     
     function updateDots(index) {
-        const dotsContainer = document.getElementById('pageDots');
-        dotsContainer.innerHTML = '';
-        for (let i=0; i<totalPages; i++) {
+        const container = document.getElementById('pageDots');
+        container.innerHTML = '';
+        for (let i=0; i<9; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
             if (i === index) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                if (i !== currentPage) {
-                    currentPage = i;
-                    showPage(currentPage);
-                }
-            });
-            dotsContainer.appendChild(dot);
+            dot.addEventListener('click', () => { if(i !== currentPage) { currentPage = i; showPage(currentPage); } });
+            container.appendChild(dot);
         }
     }
     
-    function nextPage() {
-        if (currentPage < totalPages - 1) {
-            currentPage++;
-            showPage(currentPage);
-        } else {
-            triggerConfetti(true);
-        }
-    }
+    function nextPage() { if (currentPage < 8) { currentPage++; showPage(currentPage); } else triggerConfetti(true); }
+    function prevPage() { if (currentPage > 0) { currentPage--; showPage(currentPage); } }
     
-    function prevPage() {
-        if (currentPage > 0) {
-            currentPage--;
-            showPage(currentPage);
-        }
-    }
-    
-    // Countdown to Aashirwad (16 April 2026)
+    // Countdown to Aashirwad 16 April 2026
     const targetDate = new Date('April 16, 2026 00:00:00').getTime();
     function updateCountdownDisplay() {
         const now = new Date().getTime();
         const diff = targetDate - now;
-        if (diff <= 0) {
-            document.getElementById('countdownDisplay').innerHTML = "🎉 The Aashirwad Day is HERE! 🎉";
-        } else {
+        const el = document.getElementById('countdownDisplay');
+        if (diff <= 0) el.innerHTML = "🎉 The Aashirwad Day is HERE! 🎉";
+        else {
             const days = Math.floor(diff / (1000*60*60*24));
-            const hours = Math.floor((diff % (86400000)) / 3600000);
+            const hours = Math.floor((diff % 86400000) / 3600000);
             const mins = Math.floor((diff % 3600000) / 60000);
             const secs = Math.floor((diff % 60000) / 1000);
-            document.getElementById('countdownDisplay').innerHTML = `❤️ ${days}d ${hours}h ${mins}m ${secs}s ❤️<br><span style="font-size:0.9rem;">until our Aashirwad ceremony</span>`;
+            el.innerHTML = `❤️ ${days}d ${hours}h ${mins}m ${secs}s ❤️<br><span style="font-size:0.9rem;">until our Aashirwad ceremony</span>`;
         }
     }
     setInterval(() => { if (currentPage === 0) updateCountdownDisplay(); }, 1000);
@@ -633,13 +586,7 @@
         let i = 0;
         const el = document.getElementById('typewriter-effect');
         el.innerHTML = '';
-        function type() {
-            if (i < msg.length) {
-                el.innerHTML += msg.charAt(i);
-                i++;
-                setTimeout(type, 45);
-            }
-        }
+        function type() { if (i < msg.length) { el.innerHTML += msg.charAt(i); i++; setTimeout(type, 45); } }
         type();
     }
     
@@ -649,12 +596,9 @@
             canvasConfetti({ particleCount: 300, spread: 130, origin: { y: 0.4, x: 0.2 }, startVelocity: 20 });
             canvasConfetti({ particleCount: 300, spread: 130, origin: { y: 0.4, x: 0.8 }, startVelocity: 20 });
         }
-        setTimeout(() => {
-            if (currentPage === 8) canvasConfetti({ particleCount: 500, spread: 70, origin: { y: 0.7 }, decay: 0.9 });
-        }, 200);
+        setTimeout(() => { if (currentPage === 8) canvasConfetti({ particleCount: 500, spread: 70, origin: { y: 0.7 }, decay: 0.9 }); }, 200);
     }
     
-    // Floating hearts animation (extra hearts on screen)
     function createFloatingHeart() {
         const heart = document.createElement('div');
         heart.innerHTML = ['❤️','💖','🌸','✨','💕','🌹','💗','🎈'][Math.floor(Math.random()*8)];
@@ -668,39 +612,32 @@
     }
     setInterval(createFloatingHeart, 700);
     
-    // Attach navigation buttons
     document.querySelectorAll('.nextBtn').forEach(btn => btn.addEventListener('click', nextPage));
     document.querySelectorAll('.prevBtn').forEach(btn => btn.addEventListener('click', prevPage));
     document.getElementById('next1')?.addEventListener('click', () => { currentPage = 1; showPage(1); });
     document.getElementById('replayBtn')?.addEventListener('click', () => { currentPage = 0; showPage(0); typed = false; });
     
-    // Simple audio context for gentle ambient note (user interaction)
+    // Soft audio context (simple note on first click)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    let musicAllowed = false;
-    function enableSoftTone() {
-        if (musicAllowed) return;
-        musicAllowed = true;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.frequency.value = 523.25;
-        gain.gain.value = 0.04;
-        osc.start();
-        gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.8);
-        osc.stop(audioCtx.currentTime + 0.8);
-    }
+    let soundPlayed = false;
     document.body.addEventListener('click', () => {
         if (audioCtx.state === 'suspended') audioCtx.resume();
-        enableSoftTone();
+        if (!soundPlayed) {
+            soundPlayed = true;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.frequency.value = 523.25;
+            gain.gain.value = 0.04;
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.8);
+            osc.stop(audioCtx.currentTime + 0.8);
+        }
     }, { once: true });
     
-    // Initial page
     showPage(0);
     updateCountdownDisplay();
-    
-    // Extra: add rotation effect on all existing photo-frames (already via CSS)
-    console.log("✨ Rotating photos & hearts active — Happy Birthday Prachi! ✨");
 </script>
 </body>
 </html>
