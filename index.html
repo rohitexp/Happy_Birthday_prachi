@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>✨ Prachi's Magical Birthday Journey ✨</title>
-    <!-- Google Fonts & CDNs -->
+    <title>✨ Prachi's Rotating Birthday Magic ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
-    <!-- Three.js Core -->
     <script type="importmap">
         {
             "imports": {
@@ -59,10 +56,9 @@
             padding: 20px;
         }
 
-        /* Pages Container */
         .pages-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             border-radius: 2rem;
@@ -70,6 +66,21 @@
             box-shadow: 0 25px 45px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2);
             transition: all 0.3s ease;
             border: 1px solid rgba(255,255,255,0.3);
+            max-height: 85vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #3a1f2c;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff4d6d;
+            border-radius: 10px;
         }
 
         .page {
@@ -105,16 +116,39 @@
             100% { text-shadow: 0 0 20px #ff4d6d, 0 0 5px gold; opacity: 1; }
         }
 
+        /* ROTATING PHOTO FRAME - "gumega" effect */
         .photo-frame {
             background: white;
-            padding: 8px;
+            padding: 12px;
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.3);
             margin: 1.5rem auto;
             width: 90%;
-            transform: rotate(-1deg);
-            transition: transform 0.3s;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+            animation: gentleSpin 12s infinite linear;
+            cursor: pointer;
         }
+        
+        /* Continuous 3D rotation */
+        @keyframes gentleSpin {
+            0% { transform: rotateY(0deg) rotateX(0deg); }
+            25% { transform: rotateY(5deg) rotateX(2deg); }
+            50% { transform: rotateY(0deg) rotateX(0deg); }
+            75% { transform: rotateY(-5deg) rotateX(-2deg); }
+            100% { transform: rotateY(0deg) rotateX(0deg); }
+        }
+        
+        /* Hover makes it spin faster for fun */
+        .photo-frame:hover {
+            animation: fastSpin 0.8s infinite linear;
+        }
+        
+        @keyframes fastSpin {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        
         .photo-frame img {
             width: 100%;
             border-radius: 12px;
@@ -122,8 +156,8 @@
             aspect-ratio: 4 / 5;
             object-fit: cover;
             background: #ffe0e7;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .photo-frame:hover { transform: rotate(0deg) scale(1.02); }
 
         .message-card {
             background: rgba(0,0,0,0.5);
@@ -230,28 +264,25 @@
             0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
         }
-
-        /* Scroll inside pages */
-        .pages-container {
-            max-height: 85vh;
-            overflow-y: auto;
-            scrollbar-width: thin;
+        
+        /* Gallery grid for rotating photos */
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 25px 0;
         }
-        ::-webkit-scrollbar {
-            width: 4px;
+        .gallery-grid .photo-frame {
+            width: 45%;
+            margin: 0;
+            animation: gentleSpin 10s infinite alternate;
         }
-        ::-webkit-scrollbar-track {
-            background: #3a1f2c;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ff4d6d;
-            border-radius: 10px;
-        }
-
+        
         @media (max-width: 550px) {
             .pages-container { padding: 1.2rem; margin: 0 10px; }
             h1 { font-size: 2.5rem; }
+            .gallery-grid .photo-frame { width: 100%; }
         }
     </style>
 </head>
@@ -261,7 +292,6 @@
 
 <div class="ui-overlay">
     <div class="pages-container">
-        <!-- 9 Pages (Journey Steps) -->
         <!-- PAGE 1: Countdown & Welcome -->
         <div class="page" id="page1">
             <h1>✨ Prachi's Magic ✨</h1>
@@ -272,18 +302,19 @@
                 Calculating...
             </div>
             <div class="message-card">
-                🌸 A special journey awaits you, Prachi. Each page is a gift from the heart. Let's begin!
+                🌸 A special journey awaits you, Prachi. Each page is a gift from the heart. Let's begin!<br>
+                <small>✨ Photos will rotate magically on screen ✨</small>
             </div>
             <div class="nav-buttons">
                 <button id="next1" style="margin:auto;">Start Journey <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
 
-        <!-- PAGE 2: Memory 1 -->
+        <!-- PAGE 2: Memory 1 (photo1.jpg) -->
         <div class="page" id="page2">
             <h2>❤️ First Glimpse</h2>
             <div class="photo-frame">
-                <img src="https://placehold.co/600x750/ffb7c5/4a2a3a?text=Our+Cherished+Moment+%F0%9F%93%B8" alt="Memory 1">
+                <img src="photo1.jpg" alt="Prachi & Love" onerror="this.src='https://placehold.co/600x750/ffb7c5/4a2a3a?text=Photo+1+%E2%9D%A4%EF%B8%8F'">
             </div>
             <div class="message-card">
                 "The moment I saw you, the stars aligned. Every smile of yours is poetry."
@@ -294,11 +325,11 @@
             </div>
         </div>
 
-        <!-- PAGE 3: Memory 2 -->
+        <!-- PAGE 3: Memory 2 (photo2.jpg) -->
         <div class="page" id="page3">
             <h2>🌸 Laughter & Sunshine</h2>
             <div class="photo-frame">
-                <img src="https://placehold.co/600x750/ffd966/4a2a3a?text=Happiness+with+Prachi+%F0%9F%92%96" alt="Memory 2">
+                <img src="photo2.jpg" alt="Happy Moments" onerror="this.src='https://placehold.co/600x750/ffd966/4a2a3a?text=Photo+2+%F0%9F%92%96'">
             </div>
             <div class="message-card">
                 "Your laughter is my favorite melody. May it echo forever in our journey."
@@ -344,16 +375,18 @@
             </div>
         </div>
 
-        <!-- PAGE 6: 3D Gallery concept (Photo Carousel) -->
+        <!-- PAGE 6: Rotating Gallery with both photos (gumega effect) -->
         <div class="page" id="page6">
-            <h2>📸 3D Gallery of Us</h2>
-            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 20px 0;">
-                <div class="photo-frame" style="width: 45%; margin:0; transform:rotate(2deg);"><img src="https://placehold.co/400x500/ffa5b0/white?text=Joy" style="aspect-ratio:1/1;"></div>
-                <div class="photo-frame" style="width: 45%; margin:0; transform:rotate(-2deg);"><img src="https://placehold.co/400x500/f9c7c2/white?text=Love" style="aspect-ratio:1/1;"></div>
-                <div class="photo-frame" style="width: 45%; margin:0; transform:rotate(3deg);"><img src="https://placehold.co/400x500/e6b8b8/white?text=Forever" style="aspect-ratio:1/1;"></div>
-                <div class="photo-frame" style="width: 45%; margin:0; transform:rotate(-1deg);"><img src="https://placehold.co/400x500/f4acb7/white?text=Smile" style="aspect-ratio:1/1;"></div>
+            <h2>📸 Rotating Gallery</h2>
+            <div class="gallery-grid">
+                <div class="photo-frame">
+                    <img src="photo1.jpg" alt="Memory 1" onerror="this.src='https://placehold.co/400x500/ffa5b0/white?text=Photo+1'">
+                </div>
+                <div class="photo-frame">
+                    <img src="photo2.jpg" alt="Memory 2" onerror="this.src='https://placehold.co/400x500/f9c7c2/white?text=Photo+2'">
+                </div>
             </div>
-            <div class="message-card">Every click, every moment — a treasure we built together 💎</div>
+            <div class="message-card">✨ Both photos spinning with love — just like our endless moments ✨</div>
             <div class="nav-buttons">
                 <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
                 <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
@@ -391,11 +424,11 @@
             </div>
         </div>
 
-        <!-- PAGE 9: Grand Celebration / Birthday Finale -->
+        <!-- PAGE 9: Grand Celebration / Birthday Finale with rotating photo -->
         <div class="page" id="page9">
             <h1>🎂 Happy Birthday Prachi! 🎉</h1>
             <div class="photo-frame" style="background: linear-gradient(145deg, gold, #ffb7c5);">
-                <img src="https://placehold.co/600x500/ffdfbf/5a2a3a?text=You+are+my+Eternity" style="aspect-ratio:1/1;">
+                <img src="photo1.jpg" alt="Our Beautiful Memory" onerror="this.src='https://placehold.co/600x500/ffdfbf/5a2a3a?text=You+are+my+Eternity'">
             </div>
             <div id="typewriter-effect" style="font-size: 1rem; background: rgba(0,0,0,0.6); border-radius: 1.5rem; padding: 12px; margin: 10px 0;"></div>
             <div class="message-card">"Prachi, you are my today and all of my tomorrows. Wishing you a birthday as radiant as your soul. I love you ❤️"</div>
@@ -412,7 +445,7 @@
 <script type="module">
     import * as THREE from 'three';
 
-    // ---------- 3D Setup ----------
+    // 3D Background Setup
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x050510);
@@ -429,7 +462,7 @@
 
     // Stars Background
     const starGeometry = new THREE.BufferGeometry();
-    const starCount = 1500;
+    const starCount = 1800;
     const starPositions = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
         starPositions[i*3] = (Math.random() - 0.5) * 2000;
@@ -437,51 +470,48 @@
         starPositions[i*3+2] = (Math.random() - 0.5) * 100 - 50;
     }
     starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.35, transparent: true, opacity: 0.7 });
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.3, transparent: true, opacity: 0.7 });
     const stars = new THREE.Points(starGeometry, starMaterial);
     scene.add(stars);
 
-    // MAIN 3D OBJECT: Heart Particle System (3D floating heart)
+    // 3D Heart Particle System (floating in background)
     const heartGroup = new THREE.Group();
-    const particleCount = 1800;
+    const particleCount = 2000;
     const heartGeometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
-    // Heart parametric formula: x = 16*sin(t)^3, y = 13cos(t)-5cos(2t)-2cos(3t)-cos(4t) (scaled)
     for (let i = 0; i < particleCount; i++) {
         const t = Math.random() * Math.PI * 2;
         const xRaw = 16 * Math.pow(Math.sin(t), 3);
         const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
-        // Scale down and add random Z thickness
         const scale = 0.12;
-        const x = xRaw * scale + (Math.random() - 0.5) * 0.25;
-        const y = yRaw * scale + (Math.random() - 0.5) * 0.25;
-        const z = (Math.random() - 0.5) * 1.2;
+        const x = xRaw * scale + (Math.random() - 0.5) * 0.3;
+        const y = yRaw * scale + (Math.random() - 0.5) * 0.3;
+        const z = (Math.random() - 0.5) * 1.5;
         positions[i*3] = x;
         positions[i*3+1] = y;
         positions[i*3+2] = z;
     }
     heartGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const heartMaterial = new THREE.PointsMaterial({ color: 0xff4d6d, size: 0.08, transparent: true, blending: THREE.AdditiveBlending });
+    const heartMaterial = new THREE.PointsMaterial({ color: 0xff4d6d, size: 0.07, transparent: true, blending: THREE.AdditiveBlending });
     const heartPoints = new THREE.Points(heartGeometry, heartMaterial);
     heartGroup.add(heartPoints);
     
-    // Additional floating glow particles around
+    // Glow particles
     const glowGeo = new THREE.BufferGeometry();
     const glowPos = [];
-    for (let i=0;i<800;i++) {
-        glowPos.push((Math.random() - 0.5)*4);
+    for (let i=0;i<1000;i++) {
+        glowPos.push((Math.random() - 0.5)*4.5);
+        glowPos.push((Math.random() - 0.5)*3.5);
         glowPos.push((Math.random() - 0.5)*3);
-        glowPos.push((Math.random() - 0.5)*2.5);
     }
     glowGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(glowPos), 3));
-    const glowMat = new THREE.PointsMaterial({ color: 0xff88aa, size: 0.04, transparent: true, opacity: 0.5 });
+    const glowMat = new THREE.PointsMaterial({ color: 0xff88aa, size: 0.05, transparent: true, opacity: 0.5 });
     const glowPoints = new THREE.Points(glowGeo, glowMat);
     heartGroup.add(glowPoints);
-    
     scene.add(heartGroup);
     
     // Rotating Ring
-    const ringGeo = new THREE.TorusGeometry(1.4, 0.05, 64, 300);
+    const ringGeo = new THREE.TorusGeometry(1.5, 0.06, 64, 300);
     const ringMat = new THREE.MeshStandardMaterial({ color: 0xffaabb, emissive: 0x441122, metalness: 0.7 });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     scene.add(ring);
@@ -507,14 +537,11 @@
         ring.rotation.z = time * 0.3;
         stars.rotation.y += 0.0005;
         stars.rotation.x += 0.0003;
-        
-        // Dynamic color based on active page (updated via page index)
         camera.lookAt(0, 0, 0);
         renderer.render(scene, camera);
     }
     animate3D();
     
-    // Change heart color per page
     function setHeartColor(pageIndex) {
         const colors = [0xff4d6d, 0xff80a5, 0xffb347, 0xff69b4, 0xdd88ff, 0xff6f91, 0xffaa77, 0xff99cc, 0xff5e7d];
         const hueColor = colors[pageIndex % colors.length];
@@ -530,10 +557,8 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
     
-    // ------------------- PAGE LOGIC (9 Redirects) -------------------
-    const pages = [document.getElementById('page1'), document.getElementById('page2'), document.getElementById('page3'),
-                   document.getElementById('page4'), document.getElementById('page5'), document.getElementById('page6'),
-                   document.getElementById('page7'), document.getElementById('page8'), document.getElementById('page9')];
+    // ------------------- PAGE LOGIC (9 Pages) -------------------
+    const pages = ['page1','page2','page3','page4','page5','page6','page7','page8','page9'].map(id => document.getElementById(id));
     let currentPage = 0;
     const totalPages = 9;
     
@@ -543,11 +568,10 @@
         });
         updateDots(index);
         setHeartColor(index);
-        if (index === 8) { // last page
+        if (index === 8) { 
             startTypewriter();
             triggerConfetti();
         }
-        // Special countdown update only if page 1 visible
         if (index === 0) updateCountdownDisplay();
     }
     
@@ -559,7 +583,7 @@
             dot.classList.add('dot');
             if (i === index) dot.classList.add('active');
             dot.addEventListener('click', () => {
-                if (i === 0 || currentPage !== i) {
+                if (i !== currentPage) {
                     currentPage = i;
                     showPage(currentPage);
                 }
@@ -584,7 +608,7 @@
         }
     }
     
-    // Countdown to 16 April 2026 (Aashirwad day)
+    // Countdown to Aashirwad (16 April 2026)
     const targetDate = new Date('April 16, 2026 00:00:00').getTime();
     function updateCountdownDisplay() {
         const now = new Date().getTime();
@@ -601,7 +625,6 @@
     }
     setInterval(() => { if (currentPage === 0) updateCountdownDisplay(); }, 1000);
     
-    // Typewriter effect on last page
     let typed = false;
     function startTypewriter() {
         if (typed) return;
@@ -631,19 +654,19 @@
         }, 200);
     }
     
-    // Floating hearts background effect
+    // Floating hearts animation (extra hearts on screen)
     function createFloatingHeart() {
         const heart = document.createElement('div');
-        heart.innerHTML = ['❤️','💖','🌸','✨','💕','🌹'][Math.floor(Math.random()*6)];
+        heart.innerHTML = ['❤️','💖','🌸','✨','💕','🌹','💗','🎈'][Math.floor(Math.random()*8)];
         heart.classList.add('floating-heart');
         heart.style.left = Math.random() * 100 + '%';
-        heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
+        heart.style.fontSize = (Math.random() * 24 + 12) + 'px';
         heart.style.opacity = Math.random() * 0.7 + 0.3;
         heart.style.animationDuration = (Math.random() * 5 + 4) + 's';
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 5000);
     }
-    setInterval(createFloatingHeart, 800);
+    setInterval(createFloatingHeart, 700);
     
     // Attach navigation buttons
     document.querySelectorAll('.nextBtn').forEach(btn => btn.addEventListener('click', nextPage));
@@ -651,39 +674,33 @@
     document.getElementById('next1')?.addEventListener('click', () => { currentPage = 1; showPage(1); });
     document.getElementById('replayBtn')?.addEventListener('click', () => { currentPage = 0; showPage(0); typed = false; });
     
-    // Initialize first page
-    showPage(0);
-    
-    // Interactive music: simple ambient sound with user activation (since auto-policy)
+    // Simple audio context for gentle ambient note (user interaction)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     let musicAllowed = false;
-    function enableMusic() {
+    function enableSoftTone() {
         if (musicAllowed) return;
         musicAllowed = true;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        osc.frequency.value = 440;
-        gain.gain.value = 0.05;
+        osc.frequency.value = 523.25;
+        gain.gain.value = 0.04;
         osc.start();
-        gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
-        osc.stop(audioCtx.currentTime + 0.5);
+        gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.8);
+        osc.stop(audioCtx.currentTime + 0.8);
     }
     document.body.addEventListener('click', () => {
         if (audioCtx.state === 'suspended') audioCtx.resume();
-        enableMusic();
+        enableSoftTone();
     }, { once: true });
     
-    // Add extra sparkle on page transition
-    function sparkleOnTransition() {
-        for(let i=0;i<30;i++) createFloatingHeart();
-    }
-    const originalShow = showPage;
-    window.showPage = function(idx) { originalShow(idx); sparkleOnTransition(); };
+    // Initial page
     showPage(0);
-    // small fix override
-    window.showPage(0);
+    updateCountdownDisplay();
+    
+    // Extra: add rotation effect on all existing photo-frames (already via CSS)
+    console.log("✨ Rotating photos & hearts active — Happy Birthday Prachi! ✨");
 </script>
 </body>
 </html>
