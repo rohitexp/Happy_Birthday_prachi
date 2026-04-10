@@ -3,218 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>A Magical Surprise ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <title>For You Prachi ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        :root { --pink: #ff4d6d; --bg: #0f0f0f; --accent: #880e4f; --gold: #ffd700; --light-pink: #fff0f3; }
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Poppins', sans-serif; background: var(--bg); color: white; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        :root { --pink: #ff4d6d; --dark: #1a1a1a; --gold: #ffd700; }
+        body, html { margin: 0; padding: 0; background: #000; font-family: 'Poppins', sans-serif; color: white; overflow-x: hidden; }
 
-        /* --- TIMER SCREEN --- */
+        /* Timer/Lock Screen */
         #timer-screen {
-            display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; background: radial-gradient(circle, #2b0a1a 0%, #000 100%);
-            transform: scale(0.8); transform-origin: center;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: radial-gradient(circle, #2b0a1a 0%, #000 100%); text-align: center; padding: 20px;
         }
-        .timer-title { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--pink); margin-bottom: 20px; white-space: nowrap; }
-        .clock-container { display: flex; gap: 15px; text-align: center; }
-        .clock-box { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; border: 1px solid var(--pink); min-width: 80px; }
-        .clock-box span { display: block; font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--pink); }
-        .clock-box label { font-size: 0.8rem; text-transform: uppercase; opacity: 0.7; }
+        .timer-display { font-size: 2.5rem; color: var(--pink); font-weight: bold; margin: 20px 0; }
 
-        /* --- MAGICAL REVEAL SCREEN --- */
-        #reveal-screen {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            justify-content: center; align-items: center; background: var(--bg); z-index: 500;
-            overflow: hidden;
-        }
-        .instruction { color: white; font-size: 1.2rem; opacity: 0.8; margin-bottom: 20px; z-index: 10; text-align: center; }
+        /* Magical Reveal Section */
+        #reveal-screen { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+        .ribbon { width: 100%; height: 10px; background: linear-gradient(90deg, #880e4f, var(--pink), #880e4f); cursor: pointer; position: relative; z-index: 10; transition: 0.5s; }
+        .tap-text { animation: pulse 1.5s infinite; color: var(--gold); margin-top: 20px; }
 
-        /* Ribbon & Pearl Mala */
-        .ribbon-rope {
-            position: absolute; top: 50%; left: 0; width: 100%; height: 8px;
-            background: linear-gradient(to right, #880e4f, #d81b60, #880e4f);
-            border-radius: 4px; transform: translateY(-50%); box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transition: 0.8s ease-in-out; cursor: pointer;
-        }
-        .mala {
-            position: absolute; top: calc(50% + 20px); left: 0; width: 100%; height: 15px;
-            display: flex; justify-content: center; gap: 8px; transform: translateY(-50%);
-            transition: 0.8s ease-in-out;
-        }
-        .pearl { width: 15px; height: 15px; background: radial-gradient(circle, white, #e0e0e0); border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .tap-hint { position: absolute; top: calc(50% + 50px); left: 50%; transform: translateX(-50%); color: var(--gold); font-size: 1rem; animation: pulse 1.5s infinite; text-align: center; }
-
-        /* --- FINAL REVEAL PAGE --- */
-        #final-page { 
-            display: none; background: #fff0f3; color: #444; height: 100vh; width: 100vw; 
-            overflow-y: auto; text-align: center; padding: 20px; position: absolute; top:0; left:0; 
-            box-sizing: border-box; 
-        }
-        
-        /* Floating Memories Container */
-        .floating-memories {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0; opacity: 0.2; /* Soft background effect */
-        }
-        .float-photo {
-            position: absolute; width: 100px; height: 100px; 
-            border: 5px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            animation: floatUp 15s linear infinite; opacity: 0;
-        }
-        .float-photo img { width: 100%; height: 100%; object-fit: cover; }
-
-        h1 { font-family: 'Great Vibes', cursive; font-size: 4.5rem; color: var(--pink); margin: 20px 0; opacity: 0; transform: translateY(20px); transition: 0.8s ease 0.5s; z-index: 10; position: relative; }
+        /* Final Celebration Page */
+        #final-page { display: none; background: #fff0f3; color: #333; min-height: 100vh; text-align: center; padding: 40px 20px; box-sizing: border-box; }
+        h1 { font-family: 'Great Vibes', cursive; font-size: 4rem; color: var(--pink); margin: 0; opacity: 0; }
         
         .photo-frame { 
-            width: 90%; max-width: 350px; border: 10px solid white; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 20px auto; 
-            transform: scale(0.9); transition: 0.5s ease; opacity: 0; 
-            z-index: 10; position: relative;
+            width: 100%; max-width: 320px; border: 12px solid white; border-radius: 5px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 30px auto; 
+            transform: rotate(-3deg); transition: 0.5s; opacity: 0;
         }
+        .photo-frame:nth-child(even) { transform: rotate(3deg); }
         .photo-frame img { width: 100%; display: block; }
-        
-        .msg { font-size: 1.2rem; max-width: 500px; margin: 0 auto; margin-top: 20px; color: #555; opacity: 0; transform: translateY(20px); transition: 0.8s ease 0.8s; z-index: 10; position: relative; }
-        .promise { font-style: italic; color: #777; font-size: 1.1rem; margin-top: 30px; opacity: 0; transform: translateY(20px); transition: 0.8s ease 1s; z-index: 10; position: relative; }
 
-        /* Animation Classes */
-        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-        .reveal-final h1, .reveal-final .msg, .reveal-final .photo-frame, .reveal-final .promise { opacity: 1; transform: scale(1) translateY(0); }
+        /* Typewriter Effect */
+        #typewriter { font-size: 1.2rem; color: #555; margin: 20px auto; max-width: 500px; min-height: 50px; font-style: italic; }
+
+        /* Floating Elements */
         .heart { position: fixed; top: -10%; animation: fall linear infinite; z-index: 100; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) translateX(0) rotate(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) translateX(20px) rotate(360deg); opacity: 0; }
-        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
+        /* Animations */
+        .show-up { animation: fadeInUp 1s forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <audio id="bgMusic" loop><source src="birthday_song.mp3" type="audio/mpeg"></audio>
-    <audio id="voiceMsg"><source src="voice_message.mp3" type="audio/mpeg"></audio>
 
     <div id="timer-screen">
-        <div class="timer-title">Prachi's Birthday Surprise Unlocks In...</div>
-        <div class="clock-container">
-            <div class="clock-box"><span id="days">00</span><label>Days</label></div>
-            <div class="clock-box"><span id="hours">00</span><label>Hours</label></div>
-            <div class="clock-box"><span id="mins">00</span><label>Mins</label></div>
-            <div class="clock-box"><span id="secs">00</span><label>Secs</label></div>
-        </div>
+        <h2 style="font-family: 'Great Vibes'; font-size: 2.5rem; color: var(--gold);">Waiting for the Moment...</h2>
+        <div class="timer-display" id="countdown">00:00:00:00</div>
     </div>
 
-    <div id="reveal-screen" onclick="performReveal()">
-        <p class="instruction">Tap the Ribbon to Open the Gift</p>
-        <div class="ribbon-rope" id="rope"></div>
-        <div class="mala" id="mala">
-            <script>for(let i=0; i<30; i++) document.write('<div class="pearl"></div>');</script>
-        </div>
-        <div class="tap-hint">Tap Anywhere ✨</div>
+    <div id="reveal-screen" onclick="startCelebration()">
+        <div class="ribbon" id="ribbon"></div>
+        <p class="tap-text">Prachi, Tap to open your surprise ✨</p>
     </div>
 
     <div id="final-page">
-        <div class="floating-memories">
-            <div class="float-photo" style="left: 10%; animation-delay: 2s;"><img src="photo1.jpg"></div>
-            <div class="float-photo" style="right: 15%; animation-delay: 6s; animation-duration: 20s;"><img src="photo2.jpg"></div>
-            <div class="float-photo" style="left: 20%; top: 30%; animation-delay: 10s; animation-duration: 18s;"><img src="photo3.jpg"></div>
-            <div class="float-photo" style="right: 25%; top: 40%; animation-delay: 14s; animation-duration: 22s;"><img src="photo4.jpg"></div>
+        <h1 id="title">Happy Birthday Prachi!</h1>
+        
+        <div class="photo-frame" id="f1">
+            <img src="photos1.jpg" onerror="this.src='https://via.placeholder.com/400x500?text=Photo+1'">
         </div>
-        
-        <h1>Happy Birthday Prachi!</h1>
-        
-        <div class="photo-frame"><img src="photo1.jpg"></div>
-        
-        <p class="msg">Wishing you a year full of happiness, smiles, and countless blessings. Can't wait for our new journey to begin! ❤️💍</p>
-        
-        <div class="photo-frame" style="margin-top: 30px;"><img src="photo2.jpg"></div>
-        
-        <p class="promise">"A birthday promise... to always be by your side, listen to you, and make you proud of our decision. A very happy birthday Prachi."</p>
-        
-        <p style="margin-top: 50px; margin-bottom: 50px; position: relative; z-index: 10;">- Yours Truly</p>
+
+        <div id="typewriter"></div>
+
+        <div class="photo-frame" id="f2">
+            <img src="photos2.jpg" onerror="this.src='https://via.placeholder.com/400x500?text=Photo+2'">
+        </div>
+
+        <div style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px; color: #888; font-size: 0.9rem;">
+            Aashirwad: 16 April 💍<br>
+            A beautiful journey has just begun...
+        </div>
     </div>
 
     <script>
-        // ISSE FALSE KARNE PAR TIMER DIKHEGA
-        const debugMode = true; 
+        const debugMode = true; // ABHI KE LIYE TRUE HAI
+        const targetDate = new Date('April 25, 2026 00:00:00').getTime();
 
         function updateTimer() {
-            const target = new Date('April 25, 2026 00:00:00').getTime();
             const now = new Date().getTime();
-            const diff = target - now;
+            const diff = targetDate - now;
 
             if (diff <= 0 || debugMode) {
                 document.getElementById('timer-screen').style.display = 'none';
                 document.getElementById('reveal-screen').style.display = 'flex';
             } else {
-                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById('countdown').innerHTML = `${d}d ${h}h ${m}m ${s}s`;
                 setTimeout(updateTimer, 1000);
             }
         }
         updateTimer();
 
-        // Reveal Celebration Logic
-        let alreadyRevealed = false;
-        function performReveal() {
-            if (alreadyRevealed) return;
-            alreadyRevealed = true;
+        function startCelebration() {
+            document.getElementById('reveal-screen').style.display = 'none';
+            const final = document.getElementById('final-page');
+            final.style.display = 'block';
+            
+            // Music Play
+            document.getElementById('bgMusic').play().catch(() => {});
 
-            const rope = document.getElementById('rope');
-            const mala = document.getElementById('mala');
+            // Animations
+            setTimeout(() => document.getElementById('title').classList.add('show-up'), 500);
+            setTimeout(() => document.getElementById('f1').classList.add('show-up'), 1500);
+            setTimeout(() => typeWriter(), 2500);
+            setTimeout(() => document.getElementById('f2').classList.add('show-up'), 5000);
 
-            // 1. Break the Ribbon Animation
-            rope.style.transform = 'translateY(-50%) scaleX(0)'; // Makes ribbon disappear from center
-            rope.style.opacity = '0';
-
-            // 2. Mala Pearl Fall Animation
-            const pearls = mala.querySelectorAll('.pearl');
-            pearls.forEach((pearl, index) => {
-                setTimeout(() => {
-                    pearl.style.transition = `transform ${0.5 + Math.random()}s ease-in, opacity 0.5s ease-out`;
-                    pearl.style.transform = `translateY(${window.innerHeight}px) translateX(${Math.random() * 200 - 100}px)`; // Pearl falls down with random left/right movement
-                    pearl.style.opacity = '0';
-                }, index * 20); // Adds a slight delay to each pearl fall
-            });
-
-            // 3. Play Music & Voice Message & Start Heart Rain
-            setTimeout(() => {
-                const music = document.getElementById('bgMusic');
-                const voice = document.getElementById('voiceMsg');
-                
-                // Play Background Music softer, and Voice message clear
-                music.volume = 0.3; // Low background volume
-                music.play().catch(() => console.log("Music play blocked"));
-                
-                voice.play().catch(() => console.log("Voice play blocked"));
-
-                // Show final page
-                const finalPage = document.getElementById('final-page');
-                const revealScreen = document.getElementById('reveal-screen');
-                revealScreen.style.opacity = '0'; // Soft fade out
-                setTimeout(() => revealScreen.style.display = 'none', 500);
-                
-                finalPage.style.display = 'block';
-                setTimeout(() => finalPage.classList.add('reveal-final'), 100); // Trigger fade-in animations
-
-                startHeartRain();
-            }, 1000); // 1 second after ribbon cut
+            startHearts();
         }
 
-        function startHeartRain() {
+        const msg = "Wishing you a life full of laughter and joy. On your special day, I just want to say how lucky I feel to have you in my life. Happy Birthday! ❤️";
+        let i = 0;
+        function typeWriter() {
+            if (i < msg.length) {
+                document.getElementById("typewriter").innerHTML += msg.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        function startHearts() {
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
-                heart.innerHTML = ['❤️','💖','💗','💓'][Math.floor(Math.random()*4)];
+                heart.innerHTML = ['❤️','💖','✨','🌸'][Math.floor(Math.random()*4)];
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; // Falling speed
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 5000);
-            }, 200);
+            }, 300);
         }
     </script>
 </body>
