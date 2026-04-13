@@ -1,3 +1,5 @@
+Here is the final HTML code with the video sound fixed. The birthday video will now play with audio, and I've added a mute/unmute button for convenience.
+```html
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -97,7 +99,6 @@
             100% { text-shadow: 0 0 20px #ff4d6d, 0 0 5px gold; opacity: 1; }
         }
 
-        /* ========== UNIQUE PHOTO ANIMATIONS ========== */
         .photo-frame {
             background: white;
             padding: 12px;
@@ -107,6 +108,7 @@
             width: 90%;
             transition: all 0.2s ease;
             cursor: pointer;
+            position: relative;
         }
         .photo-frame img, .photo-frame video {
             width: 100%;
@@ -117,13 +119,36 @@
             background: #ffe0e7;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        /* Video specific - allow any aspect ratio but keep frame consistent */
         .photo-frame video {
             aspect-ratio: 16 / 9;
             object-fit: cover;
         }
+        .mute-toggle {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: 0.2s;
+            z-index: 15;
+        }
+        .mute-toggle:hover {
+            background: #ff4d6d;
+            transform: scale(1.05);
+        }
+        .mute-toggle i {
+            font-size: 1.2rem;
+            color: white;
+        }
 
-        /* Animation 1: Floating & gentle rotation (page 2) */
         .anim-float {
             animation: floatRotate 6s infinite ease-in-out;
         }
@@ -133,7 +158,6 @@
             100% { transform: translateY(0px) rotate(0deg); }
         }
 
-        /* Animation 2: 3D Tilt & Pulse (page 3) */
         .anim-tilt {
             animation: tiltPulse 5s infinite alternate;
         }
@@ -142,7 +166,6 @@
             100% { transform: perspective(800px) rotateX(4deg) rotateY(6deg) scale(1.02); }
         }
 
-        /* Animation 5: Wobble + Glow (final page) */
         .anim-wobble {
             animation: wobbleGlow 2s infinite ease;
         }
@@ -294,7 +317,7 @@
             </div>
         </div>
 
-        <!-- PAGE 4: Future Promises (originally page7) -->
+        <!-- PAGE 4: Future Promises -->
         <div class="page" id="page4">
             <h2>🤞 Promises of Tomorrow</h2>
             <ul class="promise-list">
@@ -310,7 +333,7 @@
             </div>
         </div>
 
-        <!-- PAGE 5: Aashirwad Ceremony (originally page8) -->
+        <!-- PAGE 5: Aashirwad Ceremony -->
         <div class="page" id="page5">
             <h2>💍 Aashirwad Ceremony</h2>
             <div style="text-align:center; font-size: 1.2rem; background:rgba(255,215,0,0.2); padding: 20px; border-radius: 30px;">
@@ -325,14 +348,17 @@
             </div>
         </div>
 
-        <!-- PAGE 6: Grand Celebration - Wobble + Glow Video (auto-play video.mp4) -->
+        <!-- PAGE 6: Grand Celebration - Wobble + Glow Video with Sound -->
         <div class="page" id="page6">
             <h1>🎂 Happy Birthday Prachi! 🎉</h1>
             <div class="photo-frame anim-wobble" style="background: linear-gradient(145deg, gold, #ffb7c5);">
-                <video id="birthdayVideo" autoplay muted loop playsinline style="width:100%; border-radius:12px; display:block; object-fit:cover; aspect-ratio:16/9;">
+                <video id="birthdayVideo" autoplay loop playsinline style="width:100%; border-radius:12px; display:block; object-fit:cover; aspect-ratio:16/9;">
                     <source src="video.mp4" type="video/mp4">
-                    Your browser does not support the video tag. But here's a heartfelt birthday wish for you, Prachi!
+                    Your browser does not support the video tag.
                 </video>
+                <div class="mute-toggle" id="muteToggle">
+                    <i class="fas fa-volume-up"></i>
+                </div>
             </div>
             <div id="typewriter-effect" style="font-size: 1rem; background: rgba(0,0,0,0.6); border-radius: 1.5rem; padding: 12px; margin: 10px 0;"></div>
             <div class="message-card">"Prachi, you are my today and all of my tomorrows. Wishing you a birthday as radiant as your soul. I love you ❤️"</div>
@@ -451,11 +477,67 @@
     let currentPage = 0;
     
     const birthdayVideo = document.getElementById('birthdayVideo');
+    const muteToggle = document.getElementById('muteToggle');
+    let videoMuted = false;
+    
+    // Setup video sound: remove muted attribute, allow sound, but ensure autoplay after user interaction
+    // Initially remove muted from video tag (already not in tag), but we need to handle autoplay with sound.
+    // Browsers often block autoplay with sound until user interaction. Since user will click through pages,
+    // we can attempt to play with sound when final page is shown. If blocked, we show a hint.
+    function setupVideoSound() {
+        if (birthdayVideo) {
+            birthdayVideo.muted = false; // ensure unmuted
+            videoMuted = false;
+            if (muteToggle) {
+                muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+            // Try to play; if fails due to policy, we'll retry on any user click.
+            birthdayVideo.play().catch(e => {
+                console.log("Autoplay with sound blocked, waiting for user interaction");
+                // Show temporary hint
+                const hint = document.createElement('div');
+                hint.innerText = "🔊 Click anywhere to enable sound";
+                hint.style.position = "fixed";
+                hint.style.bottom = "20px";
+                hint.style.left = "20px";
+                hint.style.background = "rgba(0,0,0,0.7)";
+                hint.style.padding = "8px 16px";
+                hint.style.borderRadius = "30px";
+                hint.style.fontSize = "0.8rem";
+                hint.style.zIndex = "1000";
+                hint.style.backdropFilter = "blur(5px)";
+                document.body.appendChild(hint);
+                setTimeout(() => hint.remove(), 4000);
+            });
+        }
+    }
+    
+    function toggleMute() {
+        if (birthdayVideo) {
+            birthdayVideo.muted = !birthdayVideo.muted;
+            videoMuted = birthdayVideo.muted;
+            if (muteToggle) {
+                muteToggle.innerHTML = videoMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            }
+        }
+    }
+    
+    if (muteToggle) {
+        muteToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMute();
+        });
+    }
+    
     function handleVideoOnPage(index) {
-        if (index === 5) { // page6 (final page) is index 5
+        if (index === 5) { // final page
             if (birthdayVideo) {
-                birthdayVideo.muted = true;
-                birthdayVideo.play().catch(e => console.log("Video autoplay blocked:", e));
+                // Ensure unmuted by default, but respect user's mute toggle state
+                if (!videoMuted) birthdayVideo.muted = false;
+                birthdayVideo.play().catch(e => {
+                    console.log("Playback failed, retrying on interaction");
+                    // If fails, we'll try again on any click
+                });
             }
         } else {
             if (birthdayVideo) {
@@ -554,16 +636,19 @@
         if (birthdayVideo) {
             birthdayVideo.pause();
             birthdayVideo.currentTime = 0;
+            if (!videoMuted) birthdayVideo.muted = false;
         }
     });
     
-    // Ensure video tries to play when page becomes visible (user interaction safeguard)
+    // Global click handler to enable video sound if blocked
     document.body.addEventListener('click', () => {
         if (currentPage === 5 && birthdayVideo && birthdayVideo.paused) {
-            birthdayVideo.muted = true;
-            birthdayVideo.play().catch(e => console.log("Video play on interaction:", e));
+            birthdayVideo.play().catch(e => console.log("Playback error after click:", e));
         }
     });
+    
+    // Initialize video sound settings
+    setupVideoSound();
     
     // Soft audio context (simple note on first click)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -589,3 +674,4 @@
 </script>
 </body>
 </html>
+```
