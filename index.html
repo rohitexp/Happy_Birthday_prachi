@@ -1,4 +1,4 @@
-Here is the final HTML code with the video sound fixed. The birthday video will now play with audio, and I've added a mute/unmute button for convenience.
+Here is the final HTML code with the pages reordered as you requested: the "Happy Birthday Prachi" page comes before the "Our Wedding Countdown" page.
 ```html
 <!DOCTYPE html>
 <html lang="hi">
@@ -256,6 +256,22 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
             letter-spacing: 2px;
             margin: 20px 0;
         }
+        .wedding-countdown {
+            background: rgba(255,215,0,0.2);
+            border-radius: 2rem;
+            padding: 1.2rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .wedding-countdown .big-seconds {
+            font-size: 1.4rem;
+            font-family: monospace;
+            background: #00000066;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 3rem;
+            margin-top: 0.5rem;
+        }
         .floating-heart {
             position: absolute;
             pointer-events: none;
@@ -317,39 +333,8 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
             </div>
         </div>
 
-        <!-- PAGE 4: Future Promises -->
+        <!-- PAGE 4: Happy Birthday Prachi + Promises of Tomorrow (video & promises) -->
         <div class="page" id="page4">
-            <h2>🤞 Promises of Tomorrow</h2>
-            <ul class="promise-list">
-                <li><i class="fas fa-heart"></i> I promise to make you smile every single day.</li>
-                <li><i class="fas fa-star"></i> I'll stand by you through every storm and sunshine.</li>
-                <li><i class="fas fa-feather-alt"></i> I'll cherish every little thing about you.</li>
-                <li><i class="fas fa-globe"></i> Together we'll explore the world, hand in hand.</li>
-                <li><i class="fas fa-ring"></i> Our Aashirwad will be the beginning of forever.</li>
-            </ul>
-            <div class="nav-buttons">
-                <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
-                <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
-            </div>
-        </div>
-
-        <!-- PAGE 5: Aashirwad Ceremony -->
-        <div class="page" id="page5">
-            <h2>💍 Aashirwad Ceremony</h2>
-            <div style="text-align:center; font-size: 1.2rem; background:rgba(255,215,0,0.2); padding: 20px; border-radius: 30px;">
-                <i class="fas fa-ring" style="font-size: 3rem; color: #ffd966;"></i>
-                <p><strong>16 April 2026</strong> — The day our families unite, blessings shower, and our souls interlace forever.</p>
-                <p>✨ This sacred bond of Aashirwad marks the beginning of a magical lifetime ✨</p>
-                <div><i class="fas fa-hands-helping"></i> With love, respect and infinite dreams.</div>
-            </div>
-            <div class="nav-buttons">
-                <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
-                <button class="nextBtn">Finale <i class="fas fa-cake-candles"></i></button>
-            </div>
-        </div>
-
-        <!-- PAGE 6: Grand Celebration - Wobble + Glow Video with Sound -->
-        <div class="page" id="page6">
             <h1>🎂 Happy Birthday Prachi! 🎉</h1>
             <div class="photo-frame anim-wobble" style="background: linear-gradient(145deg, gold, #ffb7c5);">
                 <video id="birthdayVideo" autoplay loop playsinline style="width:100%; border-radius:12px; display:block; object-fit:cover; aspect-ratio:16/9;">
@@ -361,7 +346,40 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
                 </div>
             </div>
             <div id="typewriter-effect" style="font-size: 1rem; background: rgba(0,0,0,0.6); border-radius: 1.5rem; padding: 12px; margin: 10px 0;"></div>
+            
+            <!-- Promises of Tomorrow -->
+            <h2 style="font-size: 1.6rem; margin-top: 0.5rem;">🤞 Promises of Tomorrow</h2>
+            <ul class="promise-list">
+                <li><i class="fas fa-heart"></i> I promise to make you smile every single day.</li>
+                <li><i class="fas fa-star"></i> I'll stand by you through every storm and sunshine.</li>
+                <li><i class="fas fa-feather-alt"></i> I'll cherish every little thing about you.</li>
+                <li><i class="fas fa-globe"></i> Together we'll explore the world, hand in hand.</li>
+                <li><i class="fas fa-ring"></i> Our wedding on 30th June 2026 will be the start of our forever.</li>
+            </ul>
+            
             <div class="message-card">"Prachi, you are my today and all of my tomorrows. Wishing you a birthday as radiant as your soul. I love you ❤️"</div>
+            <div class="nav-buttons">
+                <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
+                <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- PAGE 5: Our Wedding Countdown (after birthday page) -->
+        <div class="page" id="page5">
+            <h2>💒 Our Wedding Countdown</h2>
+            <div class="wedding-countdown">
+                <i class="fas fa-calendar-heart" style="font-size: 2.5rem; color: #ffb347;"></i>
+                <p style="margin: 10px 0 5px; font-size: 1.3rem;">✨ 30th June 2026 ✨</p>
+                <div id="weddingTimer" style="font-size: 1.2rem; font-weight: bold; line-height: 1.6;">
+                    Calculating...
+                </div>
+                <div id="totalSecondsDisplay" class="big-seconds">
+                    Total seconds: <span id="totalSecs">0</span>
+                </div>
+            </div>
+            <div class="message-card">
+                🌹 Every second brings us closer to forever. I can't wait to call you my wife. 🌹
+            </div>
             <div class="nav-buttons">
                 <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
                 <button id="replayBtn" style="background:#ffb347;"><i class="fas fa-redo-alt"></i> Relive Journey</button>
@@ -460,7 +478,7 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
     animate3D();
     
     function setHeartColor(pageIdx) {
-        const colors = [0xff4d6d, 0xff80a5, 0xffb347, 0xff69b4, 0xdd88ff, 0xff6f91];
+        const colors = [0xff4d6d, 0xff80a5, 0xffb347, 0xff69b4, 0xdd88ff];
         heartMat.color.setHex(colors[pageIdx % colors.length]);
         glowMat.color.setHex(colors[pageIdx % colors.length]);
         ringMat.color.setHex(colors[pageIdx % colors.length]);
@@ -472,43 +490,22 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
     
-    // ---------- Page Navigation (6 pages) ----------
-    const pages = ['page1','page2','page3','page4','page5','page6'].map(id => document.getElementById(id));
+    // ---------- Page Navigation (5 pages: 1,2,3,4,5) ----------
+    const pages = ['page1','page2','page3','page4','page5'].map(id => document.getElementById(id));
     let currentPage = 0;
     
     const birthdayVideo = document.getElementById('birthdayVideo');
     const muteToggle = document.getElementById('muteToggle');
     let videoMuted = false;
     
-    // Setup video sound: remove muted attribute, allow sound, but ensure autoplay after user interaction
-    // Initially remove muted from video tag (already not in tag), but we need to handle autoplay with sound.
-    // Browsers often block autoplay with sound until user interaction. Since user will click through pages,
-    // we can attempt to play with sound when final page is shown. If blocked, we show a hint.
     function setupVideoSound() {
         if (birthdayVideo) {
-            birthdayVideo.muted = false; // ensure unmuted
+            birthdayVideo.muted = false;
             videoMuted = false;
             if (muteToggle) {
                 muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
             }
-            // Try to play; if fails due to policy, we'll retry on any user click.
-            birthdayVideo.play().catch(e => {
-                console.log("Autoplay with sound blocked, waiting for user interaction");
-                // Show temporary hint
-                const hint = document.createElement('div');
-                hint.innerText = "🔊 Click anywhere to enable sound";
-                hint.style.position = "fixed";
-                hint.style.bottom = "20px";
-                hint.style.left = "20px";
-                hint.style.background = "rgba(0,0,0,0.7)";
-                hint.style.padding = "8px 16px";
-                hint.style.borderRadius = "30px";
-                hint.style.fontSize = "0.8rem";
-                hint.style.zIndex = "1000";
-                hint.style.backdropFilter = "blur(5px)";
-                document.body.appendChild(hint);
-                setTimeout(() => hint.remove(), 4000);
-            });
+            birthdayVideo.play().catch(e => console.log("Autoplay with sound blocked, waiting for user interaction"));
         }
     }
     
@@ -530,14 +527,10 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
     }
     
     function handleVideoOnPage(index) {
-        if (index === 5) { // final page
+        if (index === 3) { // page4 (birthday page) index 3
             if (birthdayVideo) {
-                // Ensure unmuted by default, but respect user's mute toggle state
                 if (!videoMuted) birthdayVideo.muted = false;
-                birthdayVideo.play().catch(e => {
-                    console.log("Playback failed, retrying on interaction");
-                    // If fails, we'll try again on any click
-                });
+                birthdayVideo.play().catch(e => console.log("Playback failed"));
             }
         } else {
             if (birthdayVideo) {
@@ -550,20 +543,25 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
         pages.forEach((p, i) => p.classList.toggle('active-page', i === index));
         updateDots(index);
         setHeartColor(index);
-        if (index === 5) { 
+        if (index === 3) { 
             startTypewriter(); 
             triggerConfetti();
-            handleVideoOnPage(5);
+            handleVideoOnPage(3);
+        } else if (index === 4) {
+            // wedding countdown page: ensure it updates
+            updateWeddingCountdown();
+            handleVideoOnPage(4); // pause video if playing
         } else {
             handleVideoOnPage(index);
         }
         if (index === 0) updateCountdownDisplay();
+        if (index === 4) updateWeddingCountdown();
     }
     
     function updateDots(index) {
         const container = document.getElementById('pageDots');
         container.innerHTML = '';
-        for (let i=0; i<6; i++) {
+        for (let i=0; i<5; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
             if (i === index) dot.classList.add('active');
@@ -572,25 +570,58 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
         }
     }
     
-    function nextPage() { if (currentPage < 5) { currentPage++; showPage(currentPage); } else triggerConfetti(true); }
+    function nextPage() { if (currentPage < 4) { currentPage++; showPage(currentPage); } else triggerConfetti(true); }
     function prevPage() { if (currentPage > 0) { currentPage--; showPage(currentPage); } }
     
-    // Countdown to Aashirwad 16 April 2026
-    const targetDate = new Date('April 16, 2026 00:00:00').getTime();
+    // Countdown on welcome page (to wedding date)
+    const weddingTarget = new Date('June 30, 2026 00:00:00').getTime();
     function updateCountdownDisplay() {
         const now = new Date().getTime();
-        const diff = targetDate - now;
+        const diff = weddingTarget - now;
         const el = document.getElementById('countdownDisplay');
-        if (diff <= 0) el.innerHTML = "🎉 The Aashirwad Day is HERE! 🎉";
+        if (diff <= 0) el.innerHTML = "🎉 Our Wedding Day is HERE! 🎉";
         else {
             const days = Math.floor(diff / (1000*60*60*24));
             const hours = Math.floor((diff % 86400000) / 3600000);
             const mins = Math.floor((diff % 3600000) / 60000);
             const secs = Math.floor((diff % 60000) / 1000);
-            el.innerHTML = `❤️ ${days}d ${hours}h ${mins}m ${secs}s ❤️<br><span style="font-size:0.9rem;">until our Aashirwad ceremony</span>`;
+            el.innerHTML = `💒 ${days}d ${hours}h ${mins}m ${secs}s 💒<br><span style="font-size:0.9rem;">until our Wedding (30th June 2026)</span>`;
         }
     }
-    setInterval(() => { if (currentPage === 0) updateCountdownDisplay(); }, 1000);
+    
+    // Wedding countdown on page5: months, weeks, days, hours, minutes, seconds + total seconds
+    function updateWeddingCountdown() {
+        const now = new Date().getTime();
+        const diff = weddingTarget - now;
+        const totalSecsElem = document.getElementById('totalSecs');
+        const timerElem = document.getElementById('weddingTimer');
+        if (diff <= 0) {
+            if (timerElem) timerElem.innerHTML = "🎉 It's our Wedding Day! 🎉";
+            if (totalSecsElem) totalSecsElem.innerText = "0";
+            return;
+        }
+        const totalSeconds = Math.floor(diff / 1000);
+        if (totalSecsElem) totalSecsElem.innerText = totalSeconds.toLocaleString();
+        
+        const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+        const weeks = Math.floor(diff / (1000 * 60 * 60 * 24 * 7));
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        if (timerElem) {
+            timerElem.innerHTML = `
+                📅 ${months} months &nbsp;|&nbsp; 📆 ${weeks} weeks<br>
+                🗓️ ${days} days &nbsp;|&nbsp; ⏰ ${hours} hours &nbsp;|&nbsp; 🕐 ${minutes} minutes &nbsp;|&nbsp; ⏱️ ${seconds} seconds
+            `;
+        }
+    }
+    
+    setInterval(() => { 
+        if (currentPage === 0) updateCountdownDisplay(); 
+        if (currentPage === 4) updateWeddingCountdown();
+    }, 1000);
     
     let typed = false;
     function startTypewriter() {
@@ -610,7 +641,7 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
             canvasConfetti({ particleCount: 300, spread: 130, origin: { y: 0.4, x: 0.2 }, startVelocity: 20 });
             canvasConfetti({ particleCount: 300, spread: 130, origin: { y: 0.4, x: 0.8 }, startVelocity: 20 });
         }
-        setTimeout(() => { if (currentPage === 5) canvasConfetti({ particleCount: 500, spread: 70, origin: { y: 0.7 }, decay: 0.9 }); }, 200);
+        setTimeout(() => { if (currentPage === 3) canvasConfetti({ particleCount: 500, spread: 70, origin: { y: 0.7 }, decay: 0.9 }); }, 200);
     }
     
     function createFloatingHeart() {
@@ -640,14 +671,13 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
         }
     });
     
-    // Global click handler to enable video sound if blocked
+    // Global click handler for video sound
     document.body.addEventListener('click', () => {
-        if (currentPage === 5 && birthdayVideo && birthdayVideo.paused) {
-            birthdayVideo.play().catch(e => console.log("Playback error after click:", e));
+        if (currentPage === 3 && birthdayVideo && birthdayVideo.paused) {
+            birthdayVideo.play().catch(e => console.log("Playback after click:", e));
         }
     });
     
-    // Initialize video sound settings
     setupVideoSound();
     
     // Soft audio context (simple note on first click)
@@ -671,6 +701,7 @@ Here is the final HTML code with the video sound fixed. The birthday video will 
     
     showPage(0);
     updateCountdownDisplay();
+    updateWeddingCountdown();
 </script>
 </body>
 </html>
