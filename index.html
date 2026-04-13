@@ -108,7 +108,7 @@
             transition: all 0.2s ease;
             cursor: pointer;
         }
-        .photo-frame img {
+        .photo-frame img, .photo-frame video {
             width: 100%;
             border-radius: 12px;
             display: block;
@@ -116,6 +116,11 @@
             object-fit: cover;
             background: #ffe0e7;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        /* Video specific - allow any aspect ratio but keep frame consistent */
+        .photo-frame video {
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
         }
 
         /* Animation 1: Floating & gentle rotation (page 2) */
@@ -137,24 +142,7 @@
             100% { transform: perspective(800px) rotateX(4deg) rotateY(6deg) scale(1.02); }
         }
 
-        /* Animation 3: Slow 3D Spin (page 6 - left photo) */
-        .anim-spin-left {
-            animation: spin3D 8s infinite linear;
-        }
-        /* Animation 4: Reverse Spin (page 6 - right photo) */
-        .anim-spin-right {
-            animation: spin3DReverse 8s infinite linear;
-        }
-        @keyframes spin3D {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-        @keyframes spin3DReverse {
-            from { transform: rotateY(360deg); }
-            to { transform: rotateY(0deg); }
-        }
-
-        /* Animation 5: Wobble + Glow (page 9) */
+        /* Animation 5: Wobble + Glow (final page) */
         .anim-wobble {
             animation: wobbleGlow 2s infinite ease;
         }
@@ -168,24 +156,6 @@
             100% { transform: translateX(0) rotate(0); box-shadow: 0 0 20px rgba(255,215,0,0.8); }
         }
 
-        /* Gallery grid special */
-        .gallery-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin: 25px 0;
-        }
-        .gallery-grid .photo-frame {
-            width: 45%;
-            margin: 0;
-        }
-        @media (max-width: 550px) {
-            .gallery-grid .photo-frame { width: 100%; }
-            h1 { font-size: 2.5rem; }
-            .pages-container { padding: 1.2rem; }
-        }
-
         .message-card {
             background: rgba(0,0,0,0.5);
             padding: 1rem;
@@ -194,14 +164,6 @@
             font-size: 1rem;
             line-height: 1.5;
             border-left: 5px solid #ff4d6d;
-        }
-        .poem {
-            font-style: italic;
-            text-align: center;
-            font-size: 1.1rem;
-            background: rgba(255,215,0,0.15);
-            padding: 1.2rem;
-            border-radius: 2rem;
         }
         .promise-list {
             list-style: none;
@@ -299,7 +261,7 @@
             <div class="countdown-box" id="countdownDisplay">Calculating...</div>
             <div class="message-card">
                 🌸 A special journey awaits you, Prachi. Each page is a gift from the heart.<br>
-                <strong>✨ Photos will float, spin & dance ✨</strong>
+                <strong>✨ Photos will float & dance ✨</strong>
             </div>
             <div class="nav-buttons">
                 <button id="next1" style="margin:auto;">Start Journey <i class="fas fa-arrow-right"></i></button>
@@ -332,60 +294,8 @@
             </div>
         </div>
 
-        <!-- PAGE 4: Romantic Poem -->
+        <!-- PAGE 4: Future Promises (originally page7) -->
         <div class="page" id="page4">
-            <h2>✨ A Poem For You</h2>
-            <div class="poem">
-                🌹 In the garden of a thousand dreams,<br>
-                You're the rose that always gleams.<br>
-                With every dawn, with every night,<br>
-                You make my universe so bright.<br><br>
-                Prachi, your name is a sweet refrain,<br>
-                Dancing softly in the rain.<br>
-                Forever yours, in love's embrace,<br>
-                Time stands still when I see your face.
-            </div>
-            <div class="nav-buttons">
-                <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
-                <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
-            </div>
-        </div>
-
-        <!-- PAGE 5: Musical Note / Dedication -->
-        <div class="page" id="page5">
-            <h2>🎵 Melody of Hearts</h2>
-            <div class="message-card" style="text-align:center;">
-                <i class="fas fa-music" style="font-size: 2rem; color:#ffb347;"></i>
-                <p style="margin-top:12px;">"Tum hi ho" – every beat whispers your name.<br> Our love song plays on repeat in my soul.</p>
-                <hr style="margin:15px 0; border-color:#ff4d6d;">
-                <p>🎤 "You are the reason I believe in forever..." 🎤</p>
-            </div>
-            <div class="nav-buttons">
-                <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
-                <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
-            </div>
-        </div>
-
-        <!-- PAGE 6: Rotating Gallery - Two photos with 3D spin (opposite directions) -->
-        <div class="page" id="page6">
-            <h2>📸 3D Spinning Gallery</h2>
-            <div class="gallery-grid">
-                <div class="photo-frame anim-spin-left">
-                    <img src="photo1.jpg" alt="Memory 1" onerror="this.src='https://placehold.co/400x500/ffa5b0/white?text=Photo+1'">
-                </div>
-                <div class="photo-frame anim-spin-right">
-                    <img src="photo2.jpg" alt="Memory 2" onerror="this.src='https://placehold.co/400x500/f9c7c2/white?text=Photo+2'">
-                </div>
-            </div>
-            <div class="message-card">✨ Both photos spinning in 3D — one clockwise, one counter-clockwise. Just like our intertwined souls ✨</div>
-            <div class="nav-buttons">
-                <button class="prevBtn"><i class="fas fa-arrow-left"></i> Back</button>
-                <button class="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
-            </div>
-        </div>
-
-        <!-- PAGE 7: Future Promises -->
-        <div class="page" id="page7">
             <h2>🤞 Promises of Tomorrow</h2>
             <ul class="promise-list">
                 <li><i class="fas fa-heart"></i> I promise to make you smile every single day.</li>
@@ -400,8 +310,8 @@
             </div>
         </div>
 
-        <!-- PAGE 8: Aashirwad Ceremony -->
-        <div class="page" id="page8">
+        <!-- PAGE 5: Aashirwad Ceremony (originally page8) -->
+        <div class="page" id="page5">
             <h2>💍 Aashirwad Ceremony</h2>
             <div style="text-align:center; font-size: 1.2rem; background:rgba(255,215,0,0.2); padding: 20px; border-radius: 30px;">
                 <i class="fas fa-ring" style="font-size: 3rem; color: #ffd966;"></i>
@@ -415,11 +325,14 @@
             </div>
         </div>
 
-        <!-- PAGE 9: Grand Celebration - Wobble + Glow Photo -->
-        <div class="page" id="page9">
+        <!-- PAGE 6: Grand Celebration - Wobble + Glow Video (auto-play video.mp4) -->
+        <div class="page" id="page6">
             <h1>🎂 Happy Birthday Prachi! 🎉</h1>
             <div class="photo-frame anim-wobble" style="background: linear-gradient(145deg, gold, #ffb7c5);">
-                <img src="photo1.jpg" alt="Our Beautiful Memory" onerror="this.src='https://placehold.co/600x500/ffdfbf/5a2a3a?text=You+are+my+Eternity'">
+                <video id="birthdayVideo" autoplay muted loop playsinline style="width:100%; border-radius:12px; display:block; object-fit:cover; aspect-ratio:16/9;">
+                    <source src="video.mp4" type="video/mp4">
+                    Your browser does not support the video tag. But here's a heartfelt birthday wish for you, Prachi!
+                </video>
             </div>
             <div id="typewriter-effect" style="font-size: 1rem; background: rgba(0,0,0,0.6); border-radius: 1.5rem; padding: 12px; margin: 10px 0;"></div>
             <div class="message-card">"Prachi, you are my today and all of my tomorrows. Wishing you a birthday as radiant as your soul. I love you ❤️"</div>
@@ -521,7 +434,7 @@
     animate3D();
     
     function setHeartColor(pageIdx) {
-        const colors = [0xff4d6d, 0xff80a5, 0xffb347, 0xff69b4, 0xdd88ff, 0xff6f91, 0xffaa77, 0xff99cc, 0xff5e7d];
+        const colors = [0xff4d6d, 0xff80a5, 0xffb347, 0xff69b4, 0xdd88ff, 0xff6f91];
         heartMat.color.setHex(colors[pageIdx % colors.length]);
         glowMat.color.setHex(colors[pageIdx % colors.length]);
         ringMat.color.setHex(colors[pageIdx % colors.length]);
@@ -533,23 +446,42 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
     
-    // ---------- Page Navigation (9 pages) ----------
-    const pages = ['page1','page2','page3','page4','page5','page6','page7','page8','page9'].map(id => document.getElementById(id));
+    // ---------- Page Navigation (6 pages) ----------
+    const pages = ['page1','page2','page3','page4','page5','page6'].map(id => document.getElementById(id));
     let currentPage = 0;
+    
+    const birthdayVideo = document.getElementById('birthdayVideo');
+    function handleVideoOnPage(index) {
+        if (index === 5) { // page6 (final page) is index 5
+            if (birthdayVideo) {
+                birthdayVideo.muted = true;
+                birthdayVideo.play().catch(e => console.log("Video autoplay blocked:", e));
+            }
+        } else {
+            if (birthdayVideo) {
+                birthdayVideo.pause();
+            }
+        }
+    }
     
     function showPage(index) {
         pages.forEach((p, i) => p.classList.toggle('active-page', i === index));
         updateDots(index);
         setHeartColor(index);
-        if (index === 8) { startTypewriter(); triggerConfetti(); }
+        if (index === 5) { 
+            startTypewriter(); 
+            triggerConfetti();
+            handleVideoOnPage(5);
+        } else {
+            handleVideoOnPage(index);
+        }
         if (index === 0) updateCountdownDisplay();
-        // Additional fun: when entering gallery page, ensure spin animations restart (CSS handles)
     }
     
     function updateDots(index) {
         const container = document.getElementById('pageDots');
         container.innerHTML = '';
-        for (let i=0; i<9; i++) {
+        for (let i=0; i<6; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
             if (i === index) dot.classList.add('active');
@@ -558,7 +490,7 @@
         }
     }
     
-    function nextPage() { if (currentPage < 8) { currentPage++; showPage(currentPage); } else triggerConfetti(true); }
+    function nextPage() { if (currentPage < 5) { currentPage++; showPage(currentPage); } else triggerConfetti(true); }
     function prevPage() { if (currentPage > 0) { currentPage--; showPage(currentPage); } }
     
     // Countdown to Aashirwad 16 April 2026
@@ -596,7 +528,7 @@
             canvasConfetti({ particleCount: 300, spread: 130, origin: { y: 0.4, x: 0.2 }, startVelocity: 20 });
             canvasConfetti({ particleCount: 300, spread: 130, origin: { y: 0.4, x: 0.8 }, startVelocity: 20 });
         }
-        setTimeout(() => { if (currentPage === 8) canvasConfetti({ particleCount: 500, spread: 70, origin: { y: 0.7 }, decay: 0.9 }); }, 200);
+        setTimeout(() => { if (currentPage === 5) canvasConfetti({ particleCount: 500, spread: 70, origin: { y: 0.7 }, decay: 0.9 }); }, 200);
     }
     
     function createFloatingHeart() {
@@ -615,7 +547,23 @@
     document.querySelectorAll('.nextBtn').forEach(btn => btn.addEventListener('click', nextPage));
     document.querySelectorAll('.prevBtn').forEach(btn => btn.addEventListener('click', prevPage));
     document.getElementById('next1')?.addEventListener('click', () => { currentPage = 1; showPage(1); });
-    document.getElementById('replayBtn')?.addEventListener('click', () => { currentPage = 0; showPage(0); typed = false; });
+    document.getElementById('replayBtn')?.addEventListener('click', () => { 
+        currentPage = 0; 
+        showPage(0); 
+        typed = false; 
+        if (birthdayVideo) {
+            birthdayVideo.pause();
+            birthdayVideo.currentTime = 0;
+        }
+    });
+    
+    // Ensure video tries to play when page becomes visible (user interaction safeguard)
+    document.body.addEventListener('click', () => {
+        if (currentPage === 5 && birthdayVideo && birthdayVideo.paused) {
+            birthdayVideo.muted = true;
+            birthdayVideo.play().catch(e => console.log("Video play on interaction:", e));
+        }
+    });
     
     // Soft audio context (simple note on first click)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
