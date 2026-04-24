@@ -382,7 +382,7 @@
             font-weight: bold;
         }
 
-        /* Timer section (replaces future section) */
+        /* Timer section */
         .timer-section {
             margin: 3rem 0;
             text-align: center;
@@ -638,13 +638,13 @@
                 Every smile of yours, every little laugh — you've made my world brighter without even trying. 
                 I promise to be your best friend, your biggest supporter, and the one who will love you endlessly. 
                 Here's to the beautiful journey ahead, from roka to saptapadi and beyond. 
-                <strong>Happy 17th Birthday,I can't wait to call you mine forever.</strong>
+                <strong>Happy 17th Birthday, I can't wait to call you mine forever.</strong>
             </p>
             <div class="signature" id="signatureText">Your soon-to-be husband ❤️</div>
             <button class="gift-button" id="surpriseButton">Click For A Surprise!</button>
         </div>
 
-        <!-- NEW TIMER SECTION -->
+        <!-- TIMER SECTION -->
         <div class="timer-section">
             <h3 id="timerHeading">⏱️ Since First Sight ⏱️</h3>
             <div class="timer-box">
@@ -660,16 +660,16 @@
 
     <div class="hearts-container" id="heartsContainer"></div>
 
-    <!-- SURPRISE OVERLAY (3rd page) - heading changed to "Happy Birthday to You" -->
+    <!-- SURPRISE OVERLAY -->
     <div id="surpriseOverlay" class="surprise-overlay">
         <div class="surprise-content">
             <div class="close-surprise" id="closeSurpriseBtn">&times;</div>
             <h2 style="font-family:'Pacifico', cursive; color:#e91e63;" id="surpriseHeading">🎂 Happy Birthday to You 🎉</h2>
             <div class="birthday-video-frame">
-                <video id="surpriseVideo" autoplay loop playsinline muted>
+                <video id="surpriseVideo" autoplay loop playsinline muted="false">
                     <source src="video.mp4" type="video/mp4">
                 </video>
-                <div class="mute-toggle-surprise" id="surpriseMuteToggle"><i class="fas fa-volume-mute"></i></div>
+                <div class="mute-toggle-surprise" id="surpriseMuteToggle"><i class="fas fa-volume-up"></i></div>
             </div>
             <div id="surpriseTypewriter" style="font-size:1rem; background:rgba(0,0,0,0.05); border-radius:1.5rem; padding:12px; margin:10px auto; max-width:90%; color:#c2185b;"></div>
             
@@ -680,7 +680,7 @@
                 <li><i class="fas fa-feather-alt"></i> <span id="promise3">I'll cherish every little thing about you.</span></li>
                 <li><i class="fas fa-globe"></i> <span id="promise4">Together we'll explore the world, hand in hand.</span></li>
             </ul>
-            <div class="message-card" id="promiseEndMsg">"Prachi, you are my today and all of my tomorrows❤️"</div>
+            <div class="message-card" id="promiseEndMsg">"Prachi, you are my today and all of my tomorrows ❤️"</div>
             
             <h2 style="font-family:'Dancing Script', cursive; font-size:1.8rem; color:#e91e63;" id="ashirHeading">✨ Time Since Ashirwadi Ceremony ✨</h2>
             <div class="ashirwadi-timer">
@@ -695,11 +695,11 @@
 </div>
 
 <script>
-    // ---------- LANGUAGE TRANSLATIONS ----------
+    // ---------- CORRECTED LANGUAGE TRANSLATIONS MATCHING THE HTML ----------
     const translations = {
         en: {
             mainHeading: "Happy Birthday Prachi ❤️",
-            subtitle: "My future wife, my forever love...",
+            subtitle: "My future wife..",
             arrangeBadge: "✨ Our arranged marriage journey begins soon ✨",
             cap1: "Our first meeting",
             cap2: "Smile that won me",
@@ -709,8 +709,8 @@
             cap6: "You & me forever",
             cap7: "Arranged by destiny",
             cap8: "Can't wait to marry you",
-            letterTitle: "A Love Letter to My Would-Be Wife",
-            letterContent: "My Dearest Prachi,<br><br>They called it an 'arranged marriage', but I believe it was written in the stars. On your 17th birthday, 25th April, I want you to know that my heart already belongs to you. Every smile of yours, every little laugh — you've made my world brighter without even trying. I promise to be your best friend, your biggest supporter, and the one who will love you endlessly. Here's to the beautiful journey ahead, from roka to saptapadi and beyond. <strong>Happy 17th Birthday, my darling. I can't wait to call you mine forever.</strong>",
+            letterTitle: "A Letter to My Would-Be Wife",
+            letterContent: "My Dearest Prachi,<br><br>They called it an 'arranged marriage', but I believe it was written in the stars. On your 17th birthday, I want you to know that my heart already belongs to you. Every smile of yours, every little laugh — you've made my world brighter without even trying. I promise to be your best friend, your biggest supporter, and the one who will love you endlessly. Here's to the beautiful journey ahead, from roka to saptapadi and beyond. <strong>Happy 17th Birthday, I can't wait to call you mine forever.</strong>",
             signature: "Your soon-to-be husband ❤️",
             timerHeading: "⏱️ Since First Sight ⏱️",
             timerSubtext: "🌸 3rd April 2026, 3:01:23 PM 🌸",
@@ -721,7 +721,7 @@
             promise2: "I'll stand by you through every storm and sunshine.",
             promise3: "I'll cherish every little thing about you.",
             promise4: "Together we'll explore the world, hand in hand.",
-            promiseEndMsg: "\"Prachi, you are my today and all of my tomorrows. I love you ❤️\"",
+            promiseEndMsg: "\"Prachi, you are my today and all of my tomorrows ❤️\"",
             ashirHeading: "✨ Time Since Ashirwadi Ceremony ✨",
             ashirMsg: "🌹 Every second since that blessed moment brings us closer to happiness. 🌹",
             surpriseBtn: "Click For A Surprise!",
@@ -729,7 +729,7 @@
         },
         hi: {
             mainHeading: "Happy Birthday Prachi ❤️",
-            subtitle: "Merri future wife, mera forever pyaar...",
+            subtitle: "Merri future wife..",
             arrangeBadge: "✨ Hamari arranged marriage journey abhi shuru hone wali hai ✨",
             cap1: "Pehli mulaqaat",
             cap2: "Tera muskuraana",
@@ -740,7 +740,7 @@
             cap7: "Kismat se likhi shaadi",
             cap8: "Bas ab intezaar hai",
             letterTitle: "Meri Would-Be Wife Ke Liye Khat",
-            letterContent: "Meri Pyaari Prachi,<br><br>Isse 'arranged marriage' kehte hain, lekin main maanta hoon ye taaron mein likhi thi. Tere 17vein birthday par, 25th April, main chahta hoon tu jaane mera dil pehle se tera hai. Teri har muskaan, teri hansi — tune meri duniya roshan kar di hai bina kisi koshish ke. Main vaada karta hoon tera best friend rahunga, tera sabse bada supporter, aur tujhe beshumaar pyaar karne wala. Yahaan se shuru hoti hai hamari khoobsurat journey, roka se saptapadi tak. <strong>Happy 17th Birthday, meri jaan. Main intezaar nahi kar sakta tujhe apna kehne ka.</strong>",
+            letterContent: "Meri Pyaari Prachi,<br><br>Isse 'arranged marriage' kehte hain, lekin main maanta hoon ye taaron mein likhi thi. Tere 17vein birthday par, main chahta hoon tu jaane mera dil pehle se tera hai. Teri har muskaan, teri hansi — tune meri duniya roshan kar di hai bina kisi koshish ke. Main vaada karta hoon tera best friend rahunga, tera sabse bada supporter, aur tujhe beshumaar pyaar karne wala. Yahaan se shuru hoti hai hamari khoobsurat journey, roka se saptapadi tak. <strong>Happy 17th Birthday, main intezaar nahi kar sakta tujhe apna kehne ka.</strong>",
             signature: "Tumhara soon-to-be husband ❤️",
             timerHeading: "⏱️ Pehli Baar Dekha Tab Se ⏱️",
             timerSubtext: "🌸 3 April 2026, dopahar 3:01:23 🌸",
@@ -751,7 +751,7 @@
             promise2: "Har aansoo mein tera saath dunga.",
             promise3: "Teri har chhoti si baat ko khuda ki tarah maanunga.",
             promise4: "Saath duniya ghoomenge, haath mein haath daalke.",
-            promiseEndMsg: "\"Prachi, tu meri aaj hai, aur meri saari kal bhi. Main tujhe pyaar karta hoon ❤️\"",
+            promiseEndMsg: "\"Prachi, tu meri aaj hai, aur meri saari kal bhi ❤️\"",
             ashirHeading: "✨ Ashirwadi Ceremony Ke Baad Ka Waqt ✨",
             ashirMsg: "🌹 Har second humein ek doosre ke aur paas la raha hai. 🌹",
             surpriseBtn: "Click Karen Surprise Ke Liye!",
@@ -792,11 +792,12 @@
         document.getElementById('surpriseButton').innerHTML = t.surpriseBtn;
         window.surpriseMsgText = t.typewriterMsg;
         window.surpriseTyped = false;
-        // Update total seconds label
-        document.querySelector('#totalSecondsDisplay').innerHTML = t.totalSecsLabel + '<span id="totalSecs">' + (document.getElementById('totalSecs')?.innerText || '0') + '</span>';
+        // Update total seconds label dynamically
+        const totalSecsSpan = document.getElementById('totalSecs');
+        document.querySelector('#totalSecondsDisplay').innerHTML = t.totalSecsLabel + '<span id="totalSecs">' + (totalSecsSpan ? totalSecsSpan.innerText : '0') + '</span>';
     }
 
-    // Language switcher buttons
+    // Language switcher
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -806,7 +807,7 @@
         });
     });
 
-    // ---------- GAME LOGIC (speed +70%, 17 wishes, 3 misses) ----------
+    // ---------- GAME LOGIC (unchanged) ----------
     const gameScreen = document.getElementById('gameScreen');
     const mainPage = document.getElementById('mainPage');
     const canvas = document.getElementById('gameCanvas');
@@ -970,7 +971,7 @@
     window.addEventListener('resize', () => { if (gameActive) resizeCanvas(); });
     startGame();
 
-    // ---------- MAIN PAGE CELEBRATION (after game win) ----------
+    // ---------- MAIN PAGE CELEBRATION (video will play with sound) ----------
     function startMainPageCelebration() {
         createConfettiBurst();
         const polaroids = document.querySelectorAll('.polaroid');
@@ -987,6 +988,11 @@
         const surpriseVideo = document.getElementById('surpriseVideo');
         const muteToggle = document.getElementById('surpriseMuteToggle');
         
+        // Video: set to unmuted and try to play (user interaction will enable sound)
+        surpriseVideo.muted = false;
+        // Ensure mute toggle icon reflects unmuted state
+        muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+        
         surpriseBtn.addEventListener('click', function() {
             createConfettiBurst();
             overlay.classList.add('active');
@@ -999,7 +1005,8 @@
                 function type() { if (i < msg.length) { el.innerHTML += msg.charAt(i); i++; setTimeout(type, 45); } }
                 type();
             }
-            surpriseVideo.play().catch(e=>console.log);
+            // Play video with sound - but browser may block; user has clicked the button, so it will work
+            surpriseVideo.play().catch(e => console.log("Play failed, user must interact first"));
             updateElapsedTime();
             overlay.scrollTop = 0;
         });
@@ -1007,14 +1014,13 @@
             overlay.classList.remove('active');
             surpriseVideo.pause();
         });
-        if (muteToggle && surpriseVideo) {
-            let muted = true;
-            muteToggle.addEventListener('click', () => {
-                surpriseVideo.muted = !surpriseVideo.muted;
-                muted = surpriseVideo.muted;
-                muteToggle.innerHTML = muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-            });
-        }
+        // Mute toggle remains functional
+        let videoMuted = false;
+        muteToggle.addEventListener('click', () => {
+            surpriseVideo.muted = !surpriseVideo.muted;
+            videoMuted = surpriseVideo.muted;
+            muteToggle.innerHTML = videoMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+        });
         
         function getLastAshirwadi() {
             const now = new Date();
