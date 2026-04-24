@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>🎁 Birthday Gift Game - Unlock Prachi's 17th Surprise 🎁</title>
+    <title>🎁 Birthday Gift Game - Unlock Surprise 🎁</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
@@ -114,7 +114,7 @@
             pointer-events: none;
         }
 
-        /* Main Birthday Page (initially hidden) */
+        /* Main Birthday Page */
         .main-page {
             display: none;
             opacity: 0;
@@ -225,6 +225,31 @@
             color: #e91e63;
             font-weight: 600;
             margin-top: 1rem;
+        }
+
+        /* Language Switcher */
+        .lang-switch {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .lang-btn {
+            background: white;
+            border: 2px solid #e91e63;
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            color: #e91e63;
+        }
+        .lang-btn.active {
+            background: #e91e63;
+            color: white;
+        }
+        .lang-btn:hover {
+            transform: scale(1.05);
         }
 
         .gallery {
@@ -357,7 +382,53 @@
             font-weight: bold;
         }
 
-        /* SURPRISE OVERLAY (3rd page) - Original elegant design */
+        /* Timer section (replaces future section) */
+        .timer-section {
+            margin: 3rem 0;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255,255,240,0.8), rgba(255,228,225,0.8));
+            border-radius: 2rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid #ffb7c5;
+        }
+        .timer-section h3 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            color: #e91e63;
+            margin-bottom: 1rem;
+        }
+        .timer-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            display: inline-block;
+            width: 90%;
+            max-width: 500px;
+            margin-top: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .timer-digits {
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: monospace;
+            background: linear-gradient(135deg, #ff4081, #f50057);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 15px 0;
+        }
+        .total-seconds {
+            font-size: 1.2rem;
+            font-family: monospace;
+            background: #ffeef4;
+            padding: 8px;
+            border-radius: 2rem;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /* SURPRISE OVERLAY */
         .surprise-overlay {
             display: none;
             position: fixed;
@@ -455,13 +526,13 @@
             margin: 1rem 0;
             text-align: center;
         }
-        .timer-digits {
-            font-size: 1.6rem;
+        .timer-digits-small {
+            font-size: 1.3rem;
             font-weight: bold;
             font-family: monospace;
             background: white;
             display: inline-block;
-            padding: 0.5rem 1.2rem;
+            padding: 0.3rem 1rem;
             border-radius: 3rem;
             color: #e91e63;
             margin: 10px 0;
@@ -508,7 +579,8 @@
             h1 { font-size: 3rem; }
             .gallery { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
             .polaroid img { height: 170px; }
-            .timer-digits { font-size: 1.2rem; }
+            .timer-digits { font-size: 1.3rem; }
+            .lang-switch { justify-content: center; }
         }
     </style>
 </head>
@@ -532,40 +604,54 @@
     <div class="confetti-container" id="confettiContainer"></div>
     
     <div class="container">
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">🇬🇧 English</button>
+            <button class="lang-btn" data-lang="hi">🇮🇳 Hinglish</button>
+        </div>
         <div class="ribbon"></div>
         <header>
-            <h1>Happy Birthday Prachi ❤️</h1>
-            <p class="subtitle">My future wife...</p>
+            <h1 id="mainHeading">Happy Birthday Prachi ❤️</h1>
+            <p class="subtitle" id="subtitleText">My future wife..</p>
             <div class="countdown" id="countdown"></div>
-            <div style="margin-top: 15px; font-size: 1rem; background: #ffeef4; display: inline-block; padding: 5px 15px; border-radius: 40px;">
+            <div id="arrangeBadge" style="margin-top: 15px; font-size: 1rem; background: #ffeef4; display: inline-block; padding: 5px 15px; border-radius: 40px;">
                 ✨ Our arranged marriage journey begins soon ✨
             </div>
         </header>
 
         <div class="gallery">
-            <div class="polaroid"><img src="pic1.jpg" alt="Beautiful memory"><div class="caption">Our first meeting</div></div>
-            <div class="polaroid"><img src="pic2.jpg" alt="Beautiful memory"><div class="caption">Smile that won me</div></div>
-            <div class="polaroid"><img src="pic3.jpg" alt="Beautiful memory"><div class="caption">Promise of togetherness</div></div>
-            <div class="polaroid"><img src="pic4.jpg" alt="Beautiful memory"><div class="caption">Dreaming of our future</div></div>
-            <div class="polaroid"><img src="pic5.jpg" alt="Beautiful memory"><div class="caption">Chai & conversations</div></div>
-            <div class="polaroid"><img src="pic6.jpg" alt="Beautiful memory"><div class="caption">You & me forever</div></div>
-            <div class="polaroid"><img src="pic7.jpg" alt="Beautiful memory"><div class="caption">Arranged by destiny</div></div>
-            <div class="polaroid"><img src="pic8.jpg" alt="Beautiful memory"><div class="caption">Can't wait to marry you</div></div>
+            <div class="polaroid"><img src="pic1.jpg" alt="Memory"><div class="caption" id="cap1">Our first meeting</div></div>
+            <div class="polaroid"><img src="pic2.jpg" alt="Memory"><div class="caption" id="cap2">Smile that won me</div></div>
+            <div class="polaroid"><img src="pic3.jpg" alt="Memory"><div class="caption" id="cap3">Promise of togetherness</div></div>
+            <div class="polaroid"><img src="pic4.jpg" alt="Memory"><div class="caption" id="cap4">Dreaming of our future</div></div>
+            <div class="polaroid"><img src="pic5.jpg" alt="Memory"><div class="caption" id="cap5">Chai & conversations</div></div>
+            <div class="polaroid"><img src="pic6.jpg" alt="Memory"><div class="caption" id="cap6">You & me forever</div></div>
+            <div class="polaroid"><img src="pic7.jpg" alt="Memory"><div class="caption" id="cap7">Arranged by destiny</div></div>
+            <div class="polaroid"><img src="pic8.jpg" alt="Memory"><div class="caption" id="cap8">Can't wait to marry you</div></div>
         </div>
 
         <div class="message-section">
-            <h2 class="message-title">A Love Letter to My Would-Be Wife</h2>
-            <p class="message-content">
+            <h2 class="message-title" id="letterTitle">A Letter to My Would-Be Wife</h2>
+            <p class="message-content" id="letterContent">
                 My Dearest Prachi,<br><br>
                 They called it an "arranged marriage", but I believe it was written in the stars. 
                 On your 17th birthday, I want you to know that my heart already belongs to you. 
                 Every smile of yours, every little laugh — you've made my world brighter without even trying. 
                 I promise to be your best friend, your biggest supporter, and the one who will love you endlessly. 
                 Here's to the beautiful journey ahead, from roka to saptapadi and beyond. 
-                <strong>Happy 17th Birthday,my momo. I can't wait to call you mine forever.</strong>
+                <strong>Happy 17th Birthday,I can't wait to call you mine forever.</strong>
             </p>
-            <div class="signature">Your soon-to-be husband ❤️</div>
+            <div class="signature" id="signatureText">Your soon-to-be husband ❤️</div>
             <button class="gift-button" id="surpriseButton">Click For A Surprise!</button>
+        </div>
+
+        <!-- NEW TIMER SECTION -->
+        <div class="timer-section">
+            <h3 id="timerHeading">⏱️ Since First Sight ⏱️</h3>
+            <div class="timer-box">
+                <div id="timerDisplay" class="timer-digits">-- days -- hours -- minutes -- seconds</div>
+                <div id="totalSecondsDisplay" class="total-seconds">Total seconds elapsed: <span id="totalSecs">0</span></div>
+                <p id="timerSubtext" style="margin-top: 12px; font-size: 0.85rem; color: #b56576;">🌸 3rd April 2026, 3:01:23 PM 🌸</p>
+            </div>
         </div>
 
         <div class="heart-decoration heart-1">❤</div>
@@ -574,11 +660,11 @@
 
     <div class="hearts-container" id="heartsContainer"></div>
 
-    <!-- SURPRISE OVERLAY (3rd page) - Original design preserved -->
+    <!-- SURPRISE OVERLAY (3rd page) - heading changed to "Happy Birthday to You" -->
     <div id="surpriseOverlay" class="surprise-overlay">
         <div class="surprise-content">
             <div class="close-surprise" id="closeSurpriseBtn">&times;</div>
-            <h2 style="font-family:'Pacifico', cursive; color:#e91e63;">🎂 Happy 17th Birthday Prachi! 🎉</h2>
+            <h2 style="font-family:'Pacifico', cursive; color:#e91e63;" id="surpriseHeading">🎂 Happy Birthday to You 🎉</h2>
             <div class="birthday-video-frame">
                 <video id="surpriseVideo" autoplay loop playsinline muted>
                     <source src="video.mp4" type="video/mp4">
@@ -587,333 +673,446 @@
             </div>
             <div id="surpriseTypewriter" style="font-size:1rem; background:rgba(0,0,0,0.05); border-radius:1.5rem; padding:12px; margin:10px auto; max-width:90%; color:#c2185b;"></div>
             
-            <h2 style="font-family:'Dancing Script', cursive; font-size:1.8rem; color:#e91e63;">🤞 Promises of Tomorrow</h2>
+            <h2 style="font-family:'Dancing Script', cursive; font-size:1.8rem; color:#e91e63;" id="promiseHeading">🤞 Promises of Tomorrow</h2>
             <ul class="promise-list">
-                <li><i class="fas fa-heart"></i> I promise to make you smile every single day.</li>
-                <li><i class="fas fa-star"></i> I'll stand by you through every storm and sunshine.</li>
-                <li><i class="fas fa-feather-alt"></i> I'll cherish every little thing about you.</li>
-                <li><i class="fas fa-globe"></i> Together we'll explore the world, hand in hand.</li>
+                <li><i class="fas fa-heart"></i> <span id="promise1">I promise to make you smile every single day.</span></li>
+                <li><i class="fas fa-star"></i> <span id="promise2">I'll stand by you through every storm and sunshine.</span></li>
+                <li><i class="fas fa-feather-alt"></i> <span id="promise3">I'll cherish every little thing about you.</span></li>
+                <li><i class="fas fa-globe"></i> <span id="promise4">Together we'll explore the world, hand in hand.</span></li>
             </ul>
-            <div class="message-card">"Prachi, you are my today and all of my tomorrows ❤️"</div>
+            <div class="message-card" id="promiseEndMsg">"Prachi, you are my today and all of my tomorrows❤️"</div>
             
-            <h2 style="font-family:'Dancing Script', cursive; font-size:1.8rem; color:#e91e63;">✨ Time Since Ashirwadi Ceremony ✨</h2>
+            <h2 style="font-family:'Dancing Script', cursive; font-size:1.8rem; color:#e91e63;" id="ashirHeading">✨ Time Since Ashirwadi Ceremony ✨</h2>
             <div class="ashirwadi-timer">
                 <i class="fas fa-calendar-check" style="font-size: 2.5rem; color: #ffb347;"></i>
                 <p style="margin: 10px 0 5px; font-size: 1.2rem;">🌸 16th April, 7:30 PM 🌸</p>
-                <div id="ashirwadiElapsedTimer" style="font-size: 1.2rem; font-weight: bold; margin: 10px 0;">Calculating...</div>
-                <div class="timer-digits">Total seconds elapsed: <span id="totalSecsElapsed">0</span></div>
+                <div id="ashirwadiElapsedTimer" style="font-size: 1rem; font-weight: bold; margin: 10px 0;">Calculating...</div>
+                <div class="timer-digits-small">Total seconds elapsed: <span id="totalSecsElapsed">0</span></div>
             </div>
-            <div class="message-card">🌹 Every second since that blessed moment brings us closer to happiness. 🌹</div>
+            <div class="message-card" id="ashirMsg">🌹 Every second since that blessed moment brings us closer to happiness. 🌹</div>
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // ---------- GAME LOGIC: Win at 17, Speed +70% (previous speed 2.16-2.7, multiply by 1.7 => 3.672 - 4.59) ----------
-        const gameScreen = document.getElementById('gameScreen');
-        const mainPage = document.getElementById('mainPage');
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        let score = 0;
-        let misses = 0;
-        let gameActive = true;
-        let items = [];
-        let animationId = null;
-        let spawnInterval = null;
-
-        const scoreElem = document.getElementById('gameScore');
-        const missesElem = document.getElementById('gameMisses');
-        const gameStatusElem = document.getElementById('gameStatus');
-        const WIN_SCORE = 17;   // for 17th birthday
-
-        function resizeCanvas() {
-            const container = canvas.parentElement;
-            const width = container.clientWidth;
-            const height = container.clientHeight - 70;
-            canvas.width = width;
-            canvas.height = height;
+    // ---------- LANGUAGE TRANSLATIONS ----------
+    const translations = {
+        en: {
+            mainHeading: "Happy Birthday Prachi ❤️",
+            subtitle: "My future wife, my forever love...",
+            arrangeBadge: "✨ Our arranged marriage journey begins soon ✨",
+            cap1: "Our first meeting",
+            cap2: "Smile that won me",
+            cap3: "Promise of togetherness",
+            cap4: "Dreaming of our future",
+            cap5: "Chai & conversations",
+            cap6: "You & me forever",
+            cap7: "Arranged by destiny",
+            cap8: "Can't wait to marry you",
+            letterTitle: "A Love Letter to My Would-Be Wife",
+            letterContent: "My Dearest Prachi,<br><br>They called it an 'arranged marriage', but I believe it was written in the stars. On your 17th birthday, 25th April, I want you to know that my heart already belongs to you. Every smile of yours, every little laugh — you've made my world brighter without even trying. I promise to be your best friend, your biggest supporter, and the one who will love you endlessly. Here's to the beautiful journey ahead, from roka to saptapadi and beyond. <strong>Happy 17th Birthday, my darling. I can't wait to call you mine forever.</strong>",
+            signature: "Your soon-to-be husband ❤️",
+            timerHeading: "⏱️ Since First Sight ⏱️",
+            timerSubtext: "🌸 3rd April 2026, 3:01:23 PM 🌸",
+            totalSecsLabel: "Total seconds elapsed: ",
+            surpriseHeading: "🎂 Happy Birthday to You 🎉",
+            promiseHeading: "🤞 Promises of Tomorrow",
+            promise1: "I promise to make you smile every single day.",
+            promise2: "I'll stand by you through every storm and sunshine.",
+            promise3: "I'll cherish every little thing about you.",
+            promise4: "Together we'll explore the world, hand in hand.",
+            promiseEndMsg: "\"Prachi, you are my today and all of my tomorrows. I love you ❤️\"",
+            ashirHeading: "✨ Time Since Ashirwadi Ceremony ✨",
+            ashirMsg: "🌹 Every second since that blessed moment brings us closer to happiness. 🌹",
+            surpriseBtn: "Click For A Surprise!",
+            typewriterMsg: "Happy Birthday my love! Every day with you is a celebration. You make my world brighter, my heart fuller. Here's to infinite birthdays together! 🌹💫"
+        },
+        hi: {
+            mainHeading: "Happy Birthday Prachi ❤️",
+            subtitle: "Merri future wife, mera forever pyaar...",
+            arrangeBadge: "✨ Hamari arranged marriage journey abhi shuru hone wali hai ✨",
+            cap1: "Pehli mulaqaat",
+            cap2: "Tera muskuraana",
+            cap3: "Saath nibhaane ka vaada",
+            cap4: "Sapne dekhna",
+            cap5: "Chai aur baatein",
+            cap6: "Tu aur main hamesha",
+            cap7: "Kismat se likhi shaadi",
+            cap8: "Bas ab intezaar hai",
+            letterTitle: "Meri Would-Be Wife Ke Liye Khat",
+            letterContent: "Meri Pyaari Prachi,<br><br>Isse 'arranged marriage' kehte hain, lekin main maanta hoon ye taaron mein likhi thi. Tere 17vein birthday par, 25th April, main chahta hoon tu jaane mera dil pehle se tera hai. Teri har muskaan, teri hansi — tune meri duniya roshan kar di hai bina kisi koshish ke. Main vaada karta hoon tera best friend rahunga, tera sabse bada supporter, aur tujhe beshumaar pyaar karne wala. Yahaan se shuru hoti hai hamari khoobsurat journey, roka se saptapadi tak. <strong>Happy 17th Birthday, meri jaan. Main intezaar nahi kar sakta tujhe apna kehne ka.</strong>",
+            signature: "Tumhara soon-to-be husband ❤️",
+            timerHeading: "⏱️ Pehli Baar Dekha Tab Se ⏱️",
+            timerSubtext: "🌸 3 April 2026, dopahar 3:01:23 🌸",
+            totalSecsLabel: "कुल सेकंड बीते: ",
+            surpriseHeading: "🎂 Happy Birthday to You 🎉",
+            promiseHeading: "🤞 Kal Ke Vaade",
+            promise1: "Main vaada karta hoon tujhe roz hasaunga.",
+            promise2: "Har aansoo mein tera saath dunga.",
+            promise3: "Teri har chhoti si baat ko khuda ki tarah maanunga.",
+            promise4: "Saath duniya ghoomenge, haath mein haath daalke.",
+            promiseEndMsg: "\"Prachi, tu meri aaj hai, aur meri saari kal bhi. Main tujhe pyaar karta hoon ❤️\"",
+            ashirHeading: "✨ Ashirwadi Ceremony Ke Baad Ka Waqt ✨",
+            ashirMsg: "🌹 Har second humein ek doosre ke aur paas la raha hai. 🌹",
+            surpriseBtn: "Click Karen Surprise Ke Liye!",
+            typewriterMsg: "Happy Birthday meri jaan! Har din tere sang jashn hai. Tu meri duniya ko roshan karti hai. Aate rahe aise hi birthday, aur hum saath rahe hamesha! 🌹💫"
         }
+    };
 
-        class FallingItem {
-            constructor(x, y, type) {
-                this.x = x;
-                this.y = y;
-                this.type = type;
-                this.radius = 38;
-                // Original before any increases: ~1.2-1.5. After 20% then 50% we had 2.16-2.7.
-                // Now +70% from that: multiply by 1.7 => 3.672 - 4.59
-                this.speed = 3.672 + Math.random() * 0.918;
-            }
-            update() { this.y += this.speed; }
-            draw() {
-                ctx.save();
-                ctx.font = `${this.radius * 1.4}px "Segoe UI Emoji"`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.shadowBlur = 6;
-                ctx.fillText(this.type === 'momo' ? '🥟' : '🌹', this.x, this.y);
-                ctx.restore();
-            }
+    let currentLang = 'en';
+
+    function applyLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        document.getElementById('mainHeading').innerHTML = t.mainHeading;
+        document.getElementById('subtitleText').innerText = t.subtitle;
+        document.getElementById('arrangeBadge').innerHTML = t.arrangeBadge;
+        document.getElementById('cap1').innerText = t.cap1;
+        document.getElementById('cap2').innerText = t.cap2;
+        document.getElementById('cap3').innerText = t.cap3;
+        document.getElementById('cap4').innerText = t.cap4;
+        document.getElementById('cap5').innerText = t.cap5;
+        document.getElementById('cap6').innerText = t.cap6;
+        document.getElementById('cap7').innerText = t.cap7;
+        document.getElementById('cap8').innerText = t.cap8;
+        document.getElementById('letterTitle').innerText = t.letterTitle;
+        document.getElementById('letterContent').innerHTML = t.letterContent;
+        document.getElementById('signatureText').innerHTML = t.signature;
+        document.getElementById('timerHeading').innerHTML = t.timerHeading;
+        document.getElementById('timerSubtext').innerHTML = t.timerSubtext;
+        document.getElementById('surpriseHeading').innerHTML = t.surpriseHeading;
+        document.getElementById('promiseHeading').innerHTML = t.promiseHeading;
+        document.getElementById('promise1').innerText = t.promise1;
+        document.getElementById('promise2').innerText = t.promise2;
+        document.getElementById('promise3').innerText = t.promise3;
+        document.getElementById('promise4').innerText = t.promise4;
+        document.getElementById('promiseEndMsg').innerHTML = t.promiseEndMsg;
+        document.getElementById('ashirHeading').innerHTML = t.ashirHeading;
+        document.getElementById('ashirMsg').innerHTML = t.ashirMsg;
+        document.getElementById('surpriseButton').innerHTML = t.surpriseBtn;
+        window.surpriseMsgText = t.typewriterMsg;
+        window.surpriseTyped = false;
+        // Update total seconds label
+        document.querySelector('#totalSecondsDisplay').innerHTML = t.totalSecsLabel + '<span id="totalSecs">' + (document.getElementById('totalSecs')?.innerText || '0') + '</span>';
+    }
+
+    // Language switcher buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const lang = btn.getAttribute('data-lang');
+            applyLanguage(lang);
+        });
+    });
+
+    // ---------- GAME LOGIC (speed +70%, 17 wishes, 3 misses) ----------
+    const gameScreen = document.getElementById('gameScreen');
+    const mainPage = document.getElementById('mainPage');
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    let score = 0;
+    let misses = 0;
+    let gameActive = true;
+    let items = [];
+    let animationId = null;
+    let spawnInterval = null;
+
+    const scoreElem = document.getElementById('gameScore');
+    const missesElem = document.getElementById('gameMisses');
+    const gameStatusElem = document.getElementById('gameStatus');
+    const WIN_SCORE = 17;
+
+    function resizeCanvas() {
+        const container = canvas.parentElement;
+        const width = container.clientWidth;
+        const height = container.clientHeight - 70;
+        canvas.width = width;
+        canvas.height = height;
+    }
+
+    class FallingItem {
+        constructor(x, y, type) {
+            this.x = x;
+            this.y = y;
+            this.type = type;
+            this.radius = 38;
+            this.speed = 3.672 + Math.random() * 0.918;
         }
-
-        function spawnItem() {
-            if (!gameActive) return;
-            const x = 35 + Math.random() * (canvas.width - 70);
-            const type = Math.random() < 0.5 ? 'momo' : 'rose';
-            items.push(new FallingItem(x, -20, type));
+        update() { this.y += this.speed; }
+        draw() {
+            ctx.save();
+            ctx.font = `${this.radius * 1.4}px "Segoe UI Emoji"`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.shadowBlur = 6;
+            ctx.fillText(this.type === 'momo' ? '🥟' : '🌹', this.x, this.y);
+            ctx.restore();
         }
+    }
 
-        function updateGame() {
-            if (!gameActive) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#ffe4ec";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = 0; i < items.length; i++) {
-                items[i].update();
-                items[i].draw();
-            }
-            
-            // Check for misses
-            let newItems = [];
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].y < canvas.height + 35) {
-                    newItems.push(items[i]);
-                } else {
-                    misses++;
-                    missesElem.innerText = misses;
-                    if (misses >= 3) {
-                        gameActive = false;
-                        gameStatusElem.innerText = "💀 GAME OVER! Click Restart 💀";
-                        gameStatusElem.style.background = "#c2185b";
-                        gameStatusElem.style.color = "white";
-                        if (spawnInterval) clearInterval(spawnInterval);
-                        cancelAnimationFrame(animationId);
-                        animationId = null;
-                        return;
-                    }
+    function spawnItem() {
+        if (!gameActive) return;
+        const x = 35 + Math.random() * (canvas.width - 70);
+        const type = Math.random() < 0.5 ? 'momo' : 'rose';
+        items.push(new FallingItem(x, -20, type));
+    }
+
+    function updateGame() {
+        if (!gameActive) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#ffe4ec";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < items.length; i++) {
+            items[i].update();
+            items[i].draw();
+        }
+        let newItems = [];
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].y < canvas.height + 35) {
+                newItems.push(items[i]);
+            } else {
+                misses++;
+                missesElem.innerText = misses;
+                if (misses >= 3) {
+                    gameActive = false;
+                    gameStatusElem.innerText = " GAME OVER! Restart karo ";
+                    gameStatusElem.style.background = "#c2185b";
+                    gameStatusElem.style.color = "white";
+                    if (spawnInterval) clearInterval(spawnInterval);
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                    return;
                 }
             }
-            items = newItems;
-
-            // Win condition (17 Wishes)
-            if (score >= WIN_SCORE) {
-                gameActive = false;
-                if (spawnInterval) clearInterval(spawnInterval);
-                cancelAnimationFrame(animationId);
-                animationId = null;
-                gameStatusElem.innerText = "🎉 YOU WON! Opening Surprise... 🎉";
-                gameStatusElem.style.background = "gold";
-                gameStatusElem.style.color = "#c2185b";
-                setTimeout(() => {
-                    gameScreen.classList.add('hide');
-                    mainPage.classList.add('show');
-                    startMainPageCelebration();
-                }, 1000);
-                return;
-            }
-
-            animationId = requestAnimationFrame(updateGame);
         }
-
-        function startGame() {
-            gameActive = true;
-            score = 0;
-            misses = 0;
-            items = [];
-            scoreElem.innerText = score;
-            missesElem.innerText = misses;
-            gameStatusElem.innerText = `Collect ${WIN_SCORE} Wishes!`;
+        items = newItems;
+        if (score >= WIN_SCORE) {
+            gameActive = false;
+            if (spawnInterval) clearInterval(spawnInterval);
+            cancelAnimationFrame(animationId);
+            animationId = null;
+            gameStatusElem.innerText = "🎉 YOU WON! Opening Surprise... 🎉";
             gameStatusElem.style.background = "gold";
             gameStatusElem.style.color = "#c2185b";
-            if (spawnInterval) clearInterval(spawnInterval);
-            if (animationId) cancelAnimationFrame(animationId);
-            resizeCanvas();
-            spawnInterval = setInterval(() => { if (gameActive) spawnItem(); }, 950);
-            animationId = requestAnimationFrame(updateGame);
+            setTimeout(() => {
+                gameScreen.classList.add('hide');
+                mainPage.classList.add('show');
+                startMainPageCelebration();
+            }, 1000);
+            return;
         }
+        animationId = requestAnimationFrame(updateGame);
+    }
 
-        function restartGame() {
-            if (spawnInterval) clearInterval(spawnInterval);
-            if (animationId) cancelAnimationFrame(animationId);
-            startGame();
-        }
+    function startGame() {
+        gameActive = true;
+        score = 0;
+        misses = 0;
+        items = [];
+        scoreElem.innerText = score;
+        missesElem.innerText = misses;
+        gameStatusElem.innerText = `Chahiye ${WIN_SCORE} Wishes!`;
+        gameStatusElem.style.background = "gold";
+        gameStatusElem.style.color = "#c2185b";
+        if (spawnInterval) clearInterval(spawnInterval);
+        if (animationId) cancelAnimationFrame(animationId);
+        resizeCanvas();
+        spawnInterval = setInterval(() => { if (gameActive) spawnItem(); }, 950);
+        animationId = requestAnimationFrame(updateGame);
+    }
 
-        // Click/touch handler
-        function handleCanvasTap(e) {
-            if (!gameActive) return;
-            
-            let clientX, clientY;
-            if (e.touches) {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-                e.preventDefault();
-            } else {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
-            
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            const canvasX = (clientX - rect.left) * scaleX;
-            const canvasY = (clientY - rect.top) * scaleY;
-            
-            for (let i = items.length - 1; i >= 0; i--) {
-                const item = items[i];
-                const dx = canvasX - item.x;
-                const dy = canvasY - item.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < item.radius) {
-                    items.splice(i, 1);
-                    score++;
-                    scoreElem.innerText = score;
-                    canvasConfetti({ 
-                        particleCount: 12, 
-                        spread: 35, 
-                        origin: { x: (clientX - rect.left) / rect.width, y: (clientY - rect.top) / rect.height },
-                        colors: ['#ff4d6d', '#ffb347', '#ff80ab']
-                    });
-                    break;
-                }
-            }
-        }
-
-        canvas.addEventListener('click', handleCanvasTap);
-        canvas.addEventListener('touchstart', handleCanvasTap, { passive: false });
-        
-        document.getElementById('restartGameBtn').addEventListener('click', () => {
-            restartGame();
-        });
-
-        window.addEventListener('resize', () => {
-            if (gameActive) resizeCanvas();
-        });
-
+    function restartGame() {
+        if (spawnInterval) clearInterval(spawnInterval);
+        if (animationId) cancelAnimationFrame(animationId);
         startGame();
+    }
 
-        // ---------- MAIN PAGE Birthday functions (countdown & original overlay) ----------
-        function startMainPageCelebration() {
-            createConfettiBurst();
-            const polaroids = document.querySelectorAll('.polaroid');
-            polaroids.forEach((p, idx) => p.style.animationDelay = `${idx * 0.15}s`);
-            setInterval(createHeart, 600);
-            for (let i=0;i<10;i++) setTimeout(createHeart, i*300);
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-            
-            const surpriseBtn = document.getElementById('surpriseButton');
-            const overlay = document.getElementById('surpriseOverlay');
-            const closeSurprise = document.getElementById('closeSurpriseBtn');
-            const surpriseVideo = document.getElementById('surpriseVideo');
-            const muteToggle = document.getElementById('surpriseMuteToggle');
-            
-            surpriseBtn.addEventListener('click', function() {
-                createConfettiBurst();
-                overlay.classList.add('active');
-                if (!window.surpriseTyped) {
-                    window.surpriseTyped = true;
-                    const msg = "Happy 17th Birthday my momo! Every day with you is a celebration. You make my world brighter, my heart fuller. Here's to infinite birthdays together! 🌹💫";
-                    let i = 0;
-                    const el = document.getElementById('surpriseTypewriter');
-                    el.innerHTML = '';
-                    function type() { if (i < msg.length) { el.innerHTML += msg.charAt(i); i++; setTimeout(type, 45); } }
-                    type();
-                }
-                surpriseVideo.play().catch(e=>console.log);
-                updateElapsedTime();
-                overlay.scrollTop = 0;
-            });
-            closeSurprise.addEventListener('click', () => {
-                overlay.classList.remove('active');
-                surpriseVideo.pause();
-            });
-            if (muteToggle && surpriseVideo) {
-                let muted = true;
-                muteToggle.addEventListener('click', () => {
-                    surpriseVideo.muted = !surpriseVideo.muted;
-                    muted = surpriseVideo.muted;
-                    muteToggle.innerHTML = muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+    function handleCanvasTap(e) {
+        if (!gameActive) return;
+        let clientX, clientY;
+        if (e.touches) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+            e.preventDefault();
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const canvasX = (clientX - rect.left) * scaleX;
+        const canvasY = (clientY - rect.top) * scaleY;
+        for (let i = items.length - 1; i >= 0; i--) {
+            const item = items[i];
+            const dx = canvasX - item.x;
+            const dy = canvasY - item.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < item.radius) {
+                items.splice(i, 1);
+                score++;
+                scoreElem.innerText = score;
+                canvasConfetti({ 
+                    particleCount: 12, 
+                    spread: 35, 
+                    origin: { x: (clientX - rect.left) / rect.width, y: (clientY - rect.top) / rect.height },
+                    colors: ['#ff4d6d', '#ffb347', '#ff80ab']
                 });
+                break;
             }
-            
-            function getLastAshirwadi() {
-                const now = new Date();
-                let year = now.getFullYear();
-                let candidate = new Date(year, 3, 16, 19, 30, 0);
-                if (candidate > now) candidate = new Date(year-1, 3, 16, 19, 30, 0);
-                return candidate;
+        }
+    }
+
+    canvas.addEventListener('click', handleCanvasTap);
+    canvas.addEventListener('touchstart', handleCanvasTap, { passive: false });
+    document.getElementById('restartGameBtn').addEventListener('click', () => restartGame());
+    window.addEventListener('resize', () => { if (gameActive) resizeCanvas(); });
+    startGame();
+
+    // ---------- MAIN PAGE CELEBRATION (after game win) ----------
+    function startMainPageCelebration() {
+        createConfettiBurst();
+        const polaroids = document.querySelectorAll('.polaroid');
+        polaroids.forEach((p, idx) => p.style.animationDelay = `${idx * 0.15}s`);
+        setInterval(createHeart, 600);
+        for (let i=0;i<10;i++) setTimeout(createHeart, i*300);
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        startFirstSightTimer();
+        
+        const surpriseBtn = document.getElementById('surpriseButton');
+        const overlay = document.getElementById('surpriseOverlay');
+        const closeSurprise = document.getElementById('closeSurpriseBtn');
+        const surpriseVideo = document.getElementById('surpriseVideo');
+        const muteToggle = document.getElementById('surpriseMuteToggle');
+        
+        surpriseBtn.addEventListener('click', function() {
+            createConfettiBurst();
+            overlay.classList.add('active');
+            if (!window.surpriseTyped) {
+                window.surpriseTyped = true;
+                const msg = window.surpriseMsgText || (currentLang === 'en' ? translations.en.typewriterMsg : translations.hi.typewriterMsg);
+                let i = 0;
+                const el = document.getElementById('surpriseTypewriter');
+                el.innerHTML = '';
+                function type() { if (i < msg.length) { el.innerHTML += msg.charAt(i); i++; setTimeout(type, 45); } }
+                type();
             }
-            function updateElapsedTime() {
-                const ashDate = getLastAshirwadi();
-                const diff = new Date() - ashDate;
-                const totalSecs = Math.floor(diff/1000);
-                document.getElementById('totalSecsElapsed').innerText = totalSecs.toLocaleString();
-                const days = Math.floor(diff/(86400000));
-                const hours = Math.floor((diff%86400000)/3600000);
-                const mins = Math.floor((diff%3600000)/60000);
-                const secs = Math.floor((diff%60000)/1000);
-                document.getElementById('ashirwadiElapsedTimer').innerHTML = `${days} days &nbsp;| ${hours} hours &nbsp;| ${mins} minutes &nbsp;| ${secs} seconds`;
-            }
-            setInterval(updateElapsedTime, 1000);
+            surpriseVideo.play().catch(e=>console.log);
             updateElapsedTime();
+            overlay.scrollTop = 0;
+        });
+        closeSurprise.addEventListener('click', () => {
+            overlay.classList.remove('active');
+            surpriseVideo.pause();
+        });
+        if (muteToggle && surpriseVideo) {
+            let muted = true;
+            muteToggle.addEventListener('click', () => {
+                surpriseVideo.muted = !surpriseVideo.muted;
+                muted = surpriseVideo.muted;
+                muteToggle.innerHTML = muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            });
         }
         
-        const heartsContainer = document.getElementById('heartsContainer');
-        function createHeart() {
-            if (!heartsContainer) return;
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.textContent = ['❤','♥','💕','💖','💓','💗','💘','💝'][Math.floor(Math.random()*8)];
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.setProperty('--translateX', (Math.random()*150-75)+'px');
-            heart.style.setProperty('--rotate', (Math.random()*60-30)+'deg');
-            heart.style.animationDuration = 8+Math.random()*7+'s';
-            heart.style.color = `hsl(${340+Math.random()*40}, 90%, 65%)`;
-            heart.style.fontSize = 20+Math.random()*30+'px';
-            heartsContainer.appendChild(heart);
-            setTimeout(() => heart.remove(), 15000);
+        function getLastAshirwadi() {
+            const now = new Date();
+            let year = now.getFullYear();
+            let candidate = new Date(year, 3, 16, 19, 30, 0);
+            if (candidate > now) candidate = new Date(year-1, 3, 16, 19, 30, 0);
+            return candidate;
         }
-        const confettiContainer = document.getElementById('confettiContainer');
-        function createConfetti() {
-            const c = document.createElement('div');
-            c.className = 'confetti';
-            const size = Math.random()*10+5;
-            c.style.width = size+'px';
-            c.style.height = size+'px';
-            c.style.backgroundColor = ['#ff4081','#f50057','#ff80ab','#f8bbd0','#ec407a'][Math.floor(Math.random()*5)];
-            c.style.left = Math.random()*100+'%';
-            c.style.opacity = Math.random()*0.8+0.2;
-            c.style.animationDuration = Math.random()*3+2+'s';
-            confettiContainer.appendChild(c);
-            setTimeout(() => c.remove(), 8000);
-        }
-        function createConfettiBurst() {
-            for (let i=0;i<100;i++) setTimeout(() => createConfetti(), i*20);
-        }
-        const countdownEl = document.getElementById('countdown');
-        function getNextApril25() {
-            const today = new Date();
-            let year = today.getFullYear();
-            let bday = new Date(year, 3, 25);
-            if (today > bday) bday = new Date(year+1,3,25);
-            return bday;
-        }
-        function updateCountdown() {
-            const target = getNextApril25();
-            const diff = target - new Date();
-            if (diff <= 0) { 
-                countdownEl.innerHTML = "🎉 Today is Prachi's 17th Birthday! 🎉"; 
-                return; 
-            }
-            const days = Math.floor(diff/86400000);
+        function updateElapsedTime() {
+            const ashDate = getLastAshirwadi();
+            const diff = new Date() - ashDate;
+            const totalSecs = Math.floor(diff/1000);
+            document.getElementById('totalSecsElapsed').innerText = totalSecs.toLocaleString();
+            const days = Math.floor(diff/(86400000));
             const hours = Math.floor((diff%86400000)/3600000);
             const mins = Math.floor((diff%3600000)/60000);
             const secs = Math.floor((diff%60000)/1000);
-            countdownEl.innerHTML = `Countdown ${days}d ${hours}h ${mins}m ${secs}s`;
+            document.getElementById('ashirwadiElapsedTimer').innerHTML = `${days} ${currentLang==='en'?'days':'din'} &nbsp;| ${hours} ${currentLang==='en'?'hours':'ghante'} &nbsp;| ${mins} ${currentLang==='en'?'minutes':'minute'} &nbsp;| ${secs} ${currentLang==='en'?'seconds':'second'}`;
         }
-    });
+        setInterval(updateElapsedTime, 1000);
+        updateElapsedTime();
+    }
+    
+    function startFirstSightTimer() {
+        const startDate = new Date(2026, 3, 3, 15, 1, 23);
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            if (diff < 0) {
+                document.getElementById('timerDisplay').innerHTML = "Event has not started yet";
+                document.getElementById('totalSecs').innerText = "0";
+                return;
+            }
+            const totalSecs = Math.floor(diff / 1000);
+            document.getElementById('totalSecs').innerText = totalSecs.toLocaleString();
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (86400000)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (3600000)) / (1000 * 60));
+            const seconds = Math.floor((diff % (60000)) / 1000);
+            document.getElementById('timerDisplay').innerHTML = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+    
+    const heartsContainer = document.getElementById('heartsContainer');
+    function createHeart() {
+        if (!heartsContainer) return;
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = ['❤','♥','💕','💖','💓','💗','💘','💝'][Math.floor(Math.random()*8)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.setProperty('--translateX', (Math.random()*150-75)+'px');
+        heart.style.setProperty('--rotate', (Math.random()*60-30)+'deg');
+        heart.style.animationDuration = 8+Math.random()*7+'s';
+        heart.style.color = `hsl(${340+Math.random()*40}, 90%, 65%)`;
+        heart.style.fontSize = 20+Math.random()*30+'px';
+        heartsContainer.appendChild(heart);
+        setTimeout(() => heart.remove(), 15000);
+    }
+    const confettiContainer = document.getElementById('confettiContainer');
+    function createConfetti() {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        const size = Math.random()*10+5;
+        c.style.width = size+'px';
+        c.style.height = size+'px';
+        c.style.backgroundColor = ['#ff4081','#f50057','#ff80ab','#f8bbd0','#ec407a'][Math.floor(Math.random()*5)];
+        c.style.left = Math.random()*100+'%';
+        c.style.opacity = Math.random()*0.8+0.2;
+        c.style.animationDuration = Math.random()*3+2+'s';
+        confettiContainer.appendChild(c);
+        setTimeout(() => c.remove(), 8000);
+    }
+    function createConfettiBurst() {
+        for (let i=0;i<100;i++) setTimeout(() => createConfetti(), i*20);
+    }
+    const countdownEl = document.getElementById('countdown');
+    function getNextApril25() {
+        const today = new Date();
+        let year = today.getFullYear();
+        let bday = new Date(year, 3, 25);
+        if (today > bday) bday = new Date(year+1,3,25);
+        return bday;
+    }
+    function updateCountdown() {
+        const target = getNextApril25();
+        const diff = target - new Date();
+        if (diff <= 0) { 
+            countdownEl.innerHTML = "🎉 Today is Prachi's 17th Birthday! 🎉"; 
+            return; 
+        }
+        const days = Math.floor(diff/86400000);
+        const hours = Math.floor((diff%86400000)/3600000);
+        const mins = Math.floor((diff%3600000)/60000);
+        const secs = Math.floor((diff%60000)/1000);
+        countdownEl.innerHTML = `Countdown ${days}d ${hours}h ${mins}m ${secs}s`;
+    }
 </script>
 </body>
-</html>
+    </html>
