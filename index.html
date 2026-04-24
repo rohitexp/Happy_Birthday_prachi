@@ -573,14 +573,42 @@
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(233,30,99,0.4);
         }
+
+        /* --- MOBILE FIX: Make images 1:1 square on phones --- */
         @media (max-width: 768px) {
             body { padding: 1rem; }
             .container { padding: 1.5rem; }
             h1 { font-size: 3rem; }
             .gallery { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
-            .polaroid img { height: 170px; }
+            /* Force images to be square (1:1) */
+            .polaroid img {
+                aspect-ratio: 1 / 1;
+                height: auto;
+                width: 100%;
+                object-fit: cover;
+            }
+            .polaroid {
+                padding-bottom: 1rem;
+            }
             .timer-digits { font-size: 1.3rem; }
             .lang-switch { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .gallery { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+            .polaroid {
+                padding: 0.75rem;
+                padding-bottom: 1rem;
+            }
+            .polaroid img {
+                aspect-ratio: 1 / 1;
+                height: auto;
+                width: 100%;
+                object-fit: cover;
+            }
+            .polaroid .caption { font-size: 1rem; }
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -695,7 +723,7 @@
 </div>
 
 <script>
-    // ---------- CORRECTED LANGUAGE TRANSLATIONS MATCHING THE HTML ----------
+    // ---------- CORRECTED LANGUAGE TRANSLATIONS ----------
     const translations = {
         en: {
             mainHeading: "Happy Birthday Prachi ❤️",
@@ -792,18 +820,15 @@
         document.getElementById('surpriseButton').innerHTML = t.surpriseBtn;
         window.surpriseMsgText = t.typewriterMsg;
         window.surpriseTyped = false;
-        // Update total seconds label dynamically
         const totalSecsSpan = document.getElementById('totalSecs');
         document.querySelector('#totalSecondsDisplay').innerHTML = t.totalSecsLabel + '<span id="totalSecs">' + (totalSecsSpan ? totalSecsSpan.innerText : '0') + '</span>';
     }
 
-    // Language switcher
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const lang = btn.getAttribute('data-lang');
-            applyLanguage(lang);
+            applyLanguage(btn.getAttribute('data-lang'));
         });
     });
 
@@ -971,7 +996,7 @@
     window.addEventListener('resize', () => { if (gameActive) resizeCanvas(); });
     startGame();
 
-    // ---------- MAIN PAGE CELEBRATION (video will play with sound) ----------
+    // ---------- MAIN PAGE CELEBRATION ----------
     function startMainPageCelebration() {
         createConfettiBurst();
         const polaroids = document.querySelectorAll('.polaroid');
@@ -988,9 +1013,7 @@
         const surpriseVideo = document.getElementById('surpriseVideo');
         const muteToggle = document.getElementById('surpriseMuteToggle');
         
-        // Video: set to unmuted and try to play (user interaction will enable sound)
         surpriseVideo.muted = false;
-        // Ensure mute toggle icon reflects unmuted state
         muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
         
         surpriseBtn.addEventListener('click', function() {
@@ -1005,7 +1028,6 @@
                 function type() { if (i < msg.length) { el.innerHTML += msg.charAt(i); i++; setTimeout(type, 45); } }
                 type();
             }
-            // Play video with sound - but browser may block; user has clicked the button, so it will work
             surpriseVideo.play().catch(e => console.log("Play failed, user must interact first"));
             updateElapsedTime();
             overlay.scrollTop = 0;
@@ -1014,7 +1036,6 @@
             overlay.classList.remove('active');
             surpriseVideo.pause();
         });
-        // Mute toggle remains functional
         let videoMuted = false;
         muteToggle.addEventListener('click', () => {
             surpriseVideo.muted = !surpriseVideo.muted;
@@ -1121,4 +1142,4 @@
     }
 </script>
 </body>
-    </html>
+</html>
